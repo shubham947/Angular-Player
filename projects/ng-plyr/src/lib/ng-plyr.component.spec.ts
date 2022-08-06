@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgPlayerComponent } from './ng-player.component';
+import { NgPlyrComponent } from './ng-plyr.component';
 
-describe('NgPlayerComponent', () => {
-  let component: NgPlayerComponent;
-  let fixture: ComponentFixture<NgPlayerComponent>;
+describe('NgPlyrComponent', () => {
+  let component: NgPlyrComponent;
+  let fixture: ComponentFixture<NgPlyrComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NgPlayerComponent ]
+      declarations: [ NgPlyrComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgPlayerComponent);
+    fixture = TestBed.createComponent(NgPlyrComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

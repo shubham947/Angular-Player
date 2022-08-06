@@ -1,11 +1,11 @@
-# NgPlayer
+# NgPlyr
 
 An HTML5 media player, built using Angular. It has interface similar to Youtube.
 
 ## Usage
-`<ng-player src='https://example.com/video.mp4'></ng-player>`
+`<ng-plyr src='https://example.com/video.mp4'></ng-plyr>`
 
-### ng-player input attributes
+### ng-plyr input attributes
 - **src**: URL of video source (type: string)
 - **loadingImgSrc**: URL of custom loading image (type: string)
 - **bookmarks**: Array of seconds within video max duration (type: Number[])

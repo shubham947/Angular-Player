@@ -12,8 +12,8 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "paths": {
-      "ng-player": [
-        "dist/ng-player"
+      "ng-plyr": [
+        "dist/ng-plyr"
       ]
     },
     "declaration": false,
