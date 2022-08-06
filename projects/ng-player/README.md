@@ -25,6 +25,8 @@ An HTML5 media player, built using Angular. It has interface similar to Youtube.
 - [x] Looping the same video
 - [x] Custom loading image can be set
 - [x] Bookmarks can be shown on timeline
+- [ ] Show bookmark text on hovering a bookmark
+- [ ] Show image previews on hovering timeline
 
 ## Shortcuts
 | Key          | Function             |
