@@ -1,24 +1,47 @@
 # NgPlayer
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
+An HTML5 media player, built using Angular. It has interface similar to Youtube.
 
-## Code scaffolding
+## Usage
+`<ng-player src='https://example.com/video.mp4'></ng-player>`
 
-Run `ng generate component component-name --project ng-player` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-player`.
-> Note: Don't forget to add `--project ng-player` or else it will be added to the default project in your `angular.json` file. 
+### ng-player input attributes
+- **src**: URL of video source (type: string)
+- **loadingImgSrc**: URL of custom loading image (type: string)
+- **bookmarks**: Array of seconds within video max duration (type: Number[])
 
-## Build
+## Features
+- [x] Shortcuts available for different buttons
+- [x] Can switch to PIP and Fullscreen
+- [x] Double tap to seek back/forward
+- [x] Shows buffer status on timeline
+- [x] Autofetch Video metadata
+- [x] Change playback speed
+- [x] Seek to specific time by clicking on timeline
+- [x] Control for video volume
+- [ ] Show loading animation on buffering
 
-Run `ng build ng-player` to build the project. The build artifacts will be stored in the `dist/` directory.
+### For Developers
+- [x] Looping the same video
+- [x] Custom loading image can be set
+- [x] Bookmarks can be shown on timeline
+- [ ] Show bookmark text on hovering a bookmark
+- [ ] Show image previews on hovering timeline
 
-## Publishing
+## Shortcuts
+| Key          | Function             |
+| ------------ | -------------------- |
+| Space bar    | Play/Pause           |
+| `m`          | Mute/Unmute          |
+| `i`          | Toggle miniplayer    |
+| `f`          | Toggle fullscreen    |
+| `k`          | Play/Pause           |
+| `0` or `home`| Go to start          |
+| `end`        | Go to end            |
+| Up arrow     | Volume up            |
+| Down arrow   | Volume down          |
+| Left arrow   | Seek back 5 sec      |
+| Right arrow  | Seek ahead 5 sec     |
 
-After building your library with `ng build ng-player`, go to the dist folder `cd dist/ng-player` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test ng-player` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## References
+- Youtube Video: https://youtube.com/watch?v=ZeNyjnneq_w

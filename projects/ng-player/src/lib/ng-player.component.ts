@@ -22,11 +22,12 @@ progressPercent = 0;
 videoBuffers: Array<{ start: number; end: number }> = [];
 isVideoLoading = true;
 // TODO:
-videoMarkers = [];
+videoMarkers?:[] = [];
 
 // Inputs
 @Input('src') videoURL?:string;
 @Input('loadingImgSrc') loadingImgSrc?:string;
+@Input('bookmarks') bookmarks?:[];
 
 @ViewChild('videoContainer') videoContainer!: ElementRef;
 @ViewChild('video') video!: ElementRef;
@@ -37,6 +38,7 @@ ngAfterViewInit() {
   this.isPlaying = !this.video.nativeElement.paused;
   this.isMuted = this.video.nativeElement.muted;
   this.isFullscreen = this.document.fullscreenElement ? true : false;
+  this.videoMarkers = this.bookmarks;
 
   this.document.addEventListener('fullscreenchange', () => {
     if (!this.document.fullscreenElement) this.isFullscreen = false;
