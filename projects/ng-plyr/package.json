@@ -1,0 +1,14 @@
+{
+  "name": "ng-plyr",
+  "version": "0.0.3",
+  "author": {"name": "Shubham Kumar", "url": "https://github.com/shubham947/Angular-Player"},
+  "keywords": ["angular-player", "ng-plyr", "ng-player", "ng-video-player", "player", "video-player"],
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^14.1.0",
+    "@angular/core": "^14.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

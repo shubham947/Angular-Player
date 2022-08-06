@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgPlayerComponent } from './ng-player.component';
+import { NgPlyrComponent } from './ng-plyr.component';
 import { StopClickPropagationDirective } from './directive/stop-click-propagation.directive';
 
 
 
 @NgModule({
   declarations: [
-    NgPlayerComponent,
+    NgPlyrComponent,
     StopClickPropagationDirective
   ],
   imports: [
     BrowserModule
   ],
   exports: [
-    NgPlayerComponent
+    NgPlyrComponent
   ]
 })
-export class NgPlayerModule { }
+export class NgPlyrModule { }

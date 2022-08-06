@@ -2,11 +2,11 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, HostListener, Inject, Input, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'ng-player',
-  templateUrl: './ng-player.component.html',
-	styleUrls: [ './ng-player.component.scss' ]
+  selector: 'ng-plyr',
+  templateUrl: './ng-plyr.component.html',
+	styleUrls: [ './ng-plyr.component.scss' ]
 })
-export class NgPlayerComponent implements AfterViewInit {
+export class NgPlyrComponent implements AfterViewInit {
 // Flags
 isPlaying = false;
 isMuted = false;

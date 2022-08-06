@@ -103,23 +103,23 @@
         }
       }
     },
-    "ng-player": {
+    "ng-plyr": {
       "projectType": "library",
-      "root": "projects/ng-player",
-      "sourceRoot": "projects/ng-player/src",
+      "root": "projects/ng-plyr",
+      "sourceRoot": "projects/ng-plyr/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/ng-player/ng-package.json"
+            "project": "projects/ng-plyr/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ng-player/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ng-plyr/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ng-player/tsconfig.lib.json"
+              "tsConfig": "projects/ng-plyr/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -127,9 +127,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ng-player/src/test.ts",
-            "tsConfig": "projects/ng-player/tsconfig.spec.json",
-            "karmaConfig": "projects/ng-player/karma.conf.js"
+            "main": "projects/ng-plyr/src/test.ts",
+            "tsConfig": "projects/ng-plyr/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-plyr/karma.conf.js"
           }
         }
       }
