@@ -1,0 +1,267 @@
+.video-container {
+    position: relative;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    margin-inline: auto;
+    // width: 90%;
+    // height: 85vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    min-height: 200px;
+
+    &.full-screen {
+        width: 100%;
+        max-width: initial;
+        max-height: 100vh;
+    }
+
+    &:hover .video-controls-container,
+    &:focus-within .video-controls-container,
+    &.paused .video-controls-container {
+        opacity: 1;
+    }
+
+    .video-overlay {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+        cursor: pointer;
+ 
+        .loading,
+        .video-actions,
+        .seek {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            
+            button {
+                margin: 0 auto;
+            }
+        }
+
+        .loading {
+            background: rgba(0, 0, 0, 0.6) no-repeat center 45%;
+            background-image: url('../../assets/images/Spinner-multicolor.svg');
+            background-size: 200px;
+
+            // img {
+            //     width: 200px;
+            // }
+        }
+
+        .video-actions {
+            background-color: rgba(0, 0, 0, 0.6);
+
+            .play-btn {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        .seek {
+            justify-content: space-between;
+            button {
+                margin: 0;
+                width: 30%;
+                height: 100%;
+                svg {
+                    display: none;
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+        }
+    }
+
+    .video-controls-container {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100;
+        color: white;
+        opacity: 0;
+        transition: opacity 200ms ease-in-out;
+
+        &:before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .75), transparent);
+            width: 100%;
+            aspect-ratio: 6/1;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .timeline-container {
+            width: calc(100% - 1rem);
+            margin: 0 .5rem;
+            position: relative;
+
+            .timeline-progress {
+                width: 100%;
+                opacity: 0;
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+
+                &::-ms-tooltip {
+                    display: none;
+                }
+            }
+
+            .track {
+                width: 100%;
+                height: 3px;
+                background: rgba(150, 150, 150, .75);
+                pointer-events: none;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                transition: height 150ms ease-in-out;
+
+                .track-progress,
+                .track-buffers,
+                .track-markers {
+                    width: 0;
+                    height: 100%;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    transition: height 150ms ease-in-out;
+                }
+                
+                .track-progress {
+                    background: red;
+                }
+
+                .track-buffers {
+                    z-index: -1;
+                    width: 100%;
+                    
+                    .buffer {
+                        height: 100%;
+                        background-color: rgba(255, 255, 255, 0.4);
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        transition: height 150ms ease-in-out;
+                    }
+                }
+
+                .track-markers {
+                    width: 100%;
+
+                    .marker {
+                        width: 4px;
+                        height: inherit;
+                        background-color: white;
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        transition: height 150ms ease-in-out;
+                    }
+                }
+            }
+            
+            .thumb {
+                width: .8rem;
+                height: .8rem;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.85);
+                pointer-events: none;
+                position: absolute;
+                top: 50%;
+                transform: translate(0, -50%);
+                transition: width 150ms ease-in-out, height 150ms ease-in-out, background-color 150ms ease-in-out;
+            }
+
+            &:hover .track,
+            &:focus-within .track {
+                height: 7px;
+            }
+            
+            &:hover .thumb,
+            &:focus-within .thumb {
+                width: 1rem;
+                height: 1rem;
+                background-color: white;
+            }
+        }
+
+        .controls {
+            display: flex;
+            gap: .5rem;
+            padding: .25rem;
+            align-items: center;
+
+            .wide-btn {
+                width: 60px;
+            }
+
+            .volume-container {
+                align-items: center;
+
+                .volume-slider {
+                    width: 0;
+                    height: 40px;
+                    transform-origin: left;
+                    transform: scaleX(0);
+                    transition: width 150ms ease-in-out, transform 150ms ease-in-out;
+                }
+
+                &:hover .volume-slider,
+                .volume-slider:focus-within {
+                    width: 100px;
+                    transform: scaleX(1);
+                }
+            }
+
+            .duration-container {
+                flex: auto;
+                gap: .25rem;
+                flex-grow: 1;
+                align-items: center;
+            }
+        }
+    }
+
+    button {
+        background: none;
+        border: none;
+        color: white;
+        padding: 0;
+        height: 40px;
+        width: 40px;
+        font-size: 1.1rem;
+        opacity: .8;
+        cursor: pointer;
+        transition: opacity 200ms ease-in-out;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    video {
+        width: 100%;
+    }
+}
+
+// For screens smaller than 768px wide
+@media only screen and (max-width: 768px) {
+    .controls {
+        .play-next-btn,
+        .volume-slider {
+            display: none;
+        }
+    }
+}
