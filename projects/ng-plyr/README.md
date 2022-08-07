@@ -3,7 +3,25 @@
 An HTML5 media player, built using Angular. It has interface similar to Youtube.
 
 ## Usage
-`<ng-plyr src='https://example.com/video.mp4'></ng-plyr>`
+### Add NgPlyr to your AppModule:
+```
+import { NgPlyrModule } from 'ng-plyr';
+...
+
+@NgModule({
+  imports: [
+    ...
+    NgPlyrModule
+  ],
+  ...
+})
+export class AppModule { }
+```
+
+### Add this tag to your Component html
+```
+<ng-plyr src='https://example.com/video.mp4'></ng-plyr>
+```
 
 ### ng-plyr input attributes
 - **src**: URL of video source (type: string)
@@ -19,6 +37,9 @@ An HTML5 media player, built using Angular. It has interface similar to Youtube.
 - [x] Change playback speed
 - [x] Seek to specific time by clicking on timeline
 - [x] Control for video volume
+- [ ] Show video title
+- [ ] Button for looping
+- [ ] Switch for autoplay
 - [ ] Show loading animation on buffering
 
 ### For Developers
@@ -42,6 +63,10 @@ An HTML5 media player, built using Angular. It has interface similar to Youtube.
 | Down arrow   | Volume down          |
 | Left arrow   | Seek back 5 sec      |
 | Right arrow  | Seek ahead 5 sec     |
+
+## Known issues
+- Not supported in all Angular versions
+- Volume slider UI
 
 ## References
 - Youtube Video: https://youtube.com/watch?v=ZeNyjnneq_w
