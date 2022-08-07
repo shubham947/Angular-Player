@@ -1,28 +1,69 @@
 # Angular Player
 
-An HTML5 media player.
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.1.
+An HTML5 media player, built using Angular. It has interface similar to Youtube.
 
-## Development server
+## Usage
+### Add NgPlyr to your AppModule:
+```
+import { NgPlyrModule } from 'ng-plyr';
+...
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+@NgModule({
+  imports: [
+    ...
+    NgPlyrModule
+  ],
+  ...
+})
+export class AppModule { }
+```
 
-## Code scaffolding
+### Add this tag to your Component html
+```
+<ng-plyr src='https://example.com/video.mp4'></ng-plyr>
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### ng-plyr input attributes
+- **src**: URL of video source (type: string)
+- **loadingImgSrc**: URL of custom loading image (type: string)
+- **bookmarks**: Array of seconds within video max duration (type: Number[])
 
-## Build
+## Features
+- [x] Shortcuts available for different buttons
+- [x] Can switch to PIP and Fullscreen
+- [x] Double tap to seek back/forward
+- [x] Shows buffer status on timeline
+- [x] Autofetch Video metadata
+- [x] Change playback speed
+- [x] Seek to specific time by clicking on timeline
+- [x] Control for video volume
+- [ ] Show video title
+- [ ] Button for looping
+- [ ] Switch for autoplay
+- [ ] Show loading animation on buffering
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### For Developers
+- [x] Looping the same video
+- [x] Custom loading image can be set
+- [x] Bookmarks can be shown on timeline
+- [ ] Show bookmark text on hovering a bookmark
+- [ ] Show image previews on hovering timeline
 
-## Running unit tests
+## Shortcuts
+| Key          | Function             |
+| ------------ | -------------------- |
+| Space bar    | Play/Pause           |
+| `m`          | Mute/Unmute          |
+| `i`          | Toggle miniplayer    |
+| `f`          | Toggle fullscreen    |
+| `k`          | Play/Pause           |
+| `0` or `home`| Go to start          |
+| `end`        | Go to end            |
+| Up arrow     | Volume up            |
+| Down arrow   | Volume down          |
+| Left arrow   | Seek back 5 sec      |
+| Right arrow  | Seek ahead 5 sec     |
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Known issues
+- Not supported in all Angular versions
+- Volume slider UI
