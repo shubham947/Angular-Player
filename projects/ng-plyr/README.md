@@ -1,6 +1,6 @@
 # NgPlyr
 
-An HTML5 media player, built using Angular. It has interface similar to Youtube.
+An HTML5 media player, built using Angular. It has interface similar to Youtube player.
 
 ## Usage
 ### Add NgPlyr to your AppModule:
@@ -22,6 +22,11 @@ export class AppModule { }
 ```
 <ng-plyr src='https://example.com/video.mp4'></ng-plyr>
 ```
+**OR**
+```
+<ng-plyr [src]='videoUrl'></ng-plyr>
+```
+And assign value to videoUrl in component.ts
 
 ### ng-plyr input attributes
 - **src**: URL of video source (type: string)
@@ -65,7 +70,7 @@ export class AppModule { }
 | Right arrow  | Seek ahead 5 sec     |
 
 ## Known issues
-- Not supported in all Angular versions
+- Not supported in Angular versions < 14.0.0
 - Volume slider UI
 
 ## References
