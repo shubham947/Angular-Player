@@ -48,11 +48,16 @@ And assign value to videoUrl in component.ts
 - [ ] Show loading animation on buffering
 
 ### For Developers
-- [x] Looping the same video
+- [x] Provide media src
 - [x] Custom loading image can be set
 - [x] Bookmarks can be shown on timeline
+- [ ] Hide controls
+- [ ] Hover to play video thumnails
+- [ ] Looping the same video
 - [ ] Show bookmark text on hovering a bookmark
 - [ ] Show image previews on hovering timeline
+- [ ] Emit events from ng-plyr: onend, onplay, onpause, onnext, onprev etc.
+- [ ] Provide more controls like volume, playfrom, loop, autoplay etc.
 
 ## Shortcuts
 | Key          | Function             |
