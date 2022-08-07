@@ -1,11 +1,12 @@
 {
   "name": "ng-plyr",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "author": {"name": "Shubham Kumar", "url": "https://github.com/shubham947"},
-  "keywords": ["ng-plyr", "plyr", "angular", "ng-player", "video", "player", "video-player"],
-  "tags": ["ng-plyr", "plyr", "angular", "ng-player", "video", "player", "video-player"],
-  "repository": {"type": "git", "url": "https://github.com/shubham947/Angular-Player/tree/main/projects/ng-plyr"},
+  "keywords": ["ng-plyr", "plyr", "angular", "ng-player", "local", "video", "media", "youtube", "shortcuts", "player", "video-player"],
+  "tags": ["ng-plyr", "plyr", "angular", "ng-player", "local", "video", "media", "youtube", "shortcuts", "player", "video-player"],
+  "repository": {"type": "git", "url": "https://github.com/shubham947/Angular-Player.git", "directory": "projects/ng-plyr"},
+  "funding":{"type": "patreon", "url": "https://www.patreon.com/shubhamk"},
   "peerDependencies": {
     "@angular/common": "*",
     "@angular/core": "*"
