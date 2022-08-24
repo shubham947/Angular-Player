@@ -1,12 +1,13 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener, Inject, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { MediaType } from './media.model';
 
 @Component({
   selector: 'ng-plyr',
   templateUrl: './ng-plyr.component.html',
 	styleUrls: [ './ng-plyr.component.scss' ]
 })
-export class NgPlyrComponent implements AfterViewInit {
+export class NgPlyrComponent implements AfterViewInit, OnChanges {
   // Flags
   isPlaying = false;
   isMuted = false;
@@ -19,26 +20,38 @@ export class NgPlyrComponent implements AfterViewInit {
   currentTime = '0:00';
   totalTime = '0:00';
   progressPercent = 0;
-  videoBuffers: Array<{ start: number; end: number }> = [];
-  isVideoLoading = true;
+  mediaBuffers: Array<{ start: number; end: number }> = [];
+  isMediaLoading = true;
   // TODO:
-  videoMarkers?:[] = [];
+  mediaMarkers?:[] = [];
 
   // Inputs
-  @Input('src') videoURL?:string;
+  @Input('src') mediaURL?:string;
+  @Input('type') mediaType?:MediaType;
   @Input('loadingImgSrc') loadingImgSrc?:string;
-  @Input('bookmarks') bookmarks?:[];
-
+  @Input('bookmarks') bookmarks?:Array<number>;
+  @Input('volume') volume?:any;
+  @Input('loop') enableLooping?:Boolean;
+  @Input('captions') captions?:Array<{path:string, lang:string}>;
+  @Input('seekTo') playFrom?:Number;
+  
   @ViewChild('videoContainer') videoContainer!: ElementRef;
   @ViewChild('video') video!: ElementRef;
-
+  
   constructor(@Inject(DOCUMENT) private document: any) {}
+  
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    this.mediaMarkers = changes['bookmarks'].currentValue;
+    this.changeVolume(changes['volume'].currentValue);
+    this.isLoopingEnabled = changes['enableLooping'].currentValue;
+    this.seekTo(changes['playFrom'].currentValue);
+  }
 
   ngAfterViewInit() {
     this.isPlaying = !this.video.nativeElement.paused;
     this.isMuted = this.video.nativeElement.muted;
     this.isFullscreen = this.document.fullscreenElement ? true : false;
-    this.videoMarkers = this.bookmarks;
 
     this.document.addEventListener('fullscreenchange', () => {
       if (!this.document.fullscreenElement) this.isFullscreen = false;
@@ -105,11 +118,11 @@ export class NgPlyrComponent implements AfterViewInit {
     const buf = this.video.nativeElement.buffered;
     if (buf.length === 1 && buf.end(0) - buf.start(0) === this.video.nativeElement.duration) return;
 
-    this.videoBuffers = [];
+    this.mediaBuffers = [];
     for (let i = 0; i < buf.length; i++) {
       let start = Number((buf.start(i) / this.video.nativeElement.duration).toPrecision(3)) * 100;
       let end = Number((buf.end(i) / this.video.nativeElement.duration).toPrecision(3)) * 100;
-      this.videoBuffers.push({ start, end });
+      this.mediaBuffers.push({ start, end });
     }
   }
 
