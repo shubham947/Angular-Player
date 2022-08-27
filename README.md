@@ -42,10 +42,10 @@ And assign value to videoUrl in component.ts
 - [x] Change playback speed
 - [x] Seek to specific time by clicking on timeline
 - [x] Control for video volume
+- [x] Show loading animation on buffering
 - [ ] Show video title
 - [ ] Button for looping
 - [ ] Switch for autoplay
-- [ ] Show loading animation on buffering
 
 ### For Developers
 - [x] Provide media src
