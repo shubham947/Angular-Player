@@ -122,16 +122,23 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 
   // Display video buffers on timeline
   showBuffers() {
-    const buf = this.video.nativeElement.buffered;
-    if (buf.length === 1 && buf.end(0) - buf.start(0) === this.video.nativeElement.duration) return;
+		const buf = this.video.nativeElement.buffered;
+		if (buf.length === 1 && buf.end(0) - buf.start(0) === this.video.nativeElement.duration) {
+			this.isMediaLoading = false;
+			return;
+		}
+		this.isMediaLoading = true;
 
-    this.mediaBuffers = [];
-    for (let i = 0; i < buf.length; i++) {
-      let start = Number((buf.start(i) / this.video.nativeElement.duration).toPrecision(3)) * 100;
-      let end = Number((buf.end(i) / this.video.nativeElement.duration).toPrecision(3)) * 100;
-      this.mediaBuffers.push({ start, end });
-    }
-  }
+		this.mediaBuffers = [];
+		for (let i = 0; i < buf.length; i++) {
+			let start = Number((buf.start(i) / this.video.nativeElement.duration).toPrecision(3)) * 100;
+			let end = Number((buf.end(i) / this.video.nativeElement.duration).toPrecision(3)) * 100;
+			this.mediaBuffers.push({ start, end });
+			if (this.video.nativeElement.currentTime >= buf.start(i) && this.video.nativeElement.currentTime <= buf.end(i)) {
+				this.isMediaLoading = false;
+			}
+		}
+	}
 
   // Seek to specific time
   seekTo(atSecond: number | string) {
