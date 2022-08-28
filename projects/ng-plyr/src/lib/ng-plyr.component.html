@@ -2,10 +2,10 @@
     <div class="video-overlay" (click)="togglePlay()">
         <div stopClickPropagation class="loading"
             [ngStyle]="{'background-image': loadingImgSrc ? 'url(' + loadingImgSrc + ')':'../assets/images/Spinner-multicolor.svg'}"
-            *ngIf="isVideoLoading">
+            *ngIf="isMediaLoading">
             <!-- <img [src]="loadingImgSrc"> -->
         </div>
-        <div class="video-actions" *ngIf="!isVideoLoading && video.paused">
+        <div class="video-actions" *ngIf="!isMediaLoading && video.paused">
             <button stopClickPropagation class="play-prev-btn" title="Previous" (click)="playPrevVideo()">
                 <svg class="play-prev-icon" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M0 0h24v24H0z" fill="none" />
@@ -24,18 +24,24 @@
                 </svg>
             </button>
         </div>
-        <div class="seek" *ngIf="!isVideoLoading && !video.paused">
-            <button stopClickPropagation class="seek-back-btn" (click)="seekTo(video.currentTime-5)">
-                <svg class="seek-back-icon" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M0 0h24v24H0z" fill="none" />
-                    <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" />
-                </svg>
+        <div class="seek" *ngIf="!isMediaLoading && !video.paused">
+            <button stopClickPropagation class="seek-back-btn" (click)="seekBwd($event)" (dblclick)="seekBwd($event)">
+                <div [ngStyle]="{'display': bwdClickCount>0 ? 'block' : 'none'}">
+                    <div>{{bwdClickCount * seekStepInSec}} seconds</div>
+                    <svg class="seek-back-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" />
+                    </svg>
+                </div>
             </button>
-            <button stopClickPropagation class="seek-ahead-btn" (click)="seekTo(video.currentTime+5)">
-                <svg class="seek-ahead-icon" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M0 0h24v24H0z" fill="none" />
-                    <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" />
-                </svg>
+            <button stopClickPropagation class="seek-ahead-btn" (click)="seekFwd($event)" (dblclick)="seekFwd($event)">
+                <div [ngStyle]="{'display': fwdClickCount>0 ? 'block' : 'none'}">
+                    <div>{{fwdClickCount * seekStepInSec}} seconds</div>
+                    <svg class="seek-ahead-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" />
+                    </svg>
+                </div>
             </button>
         </div>
     </div>
@@ -47,11 +53,11 @@
             <div class="track">
                 <div class="track-progress" [ngStyle]="{'width':progressPercent + '%'}"></div>
                 <div class="track-buffers">
-                    <span class="buffer" *ngFor="let buffer of videoBuffers"
+                    <span class="buffer" *ngFor="let buffer of mediaBuffers"
                         [ngStyle]="{'left':buffer.start + '%', 'width':buffer.end - buffer.start + '%'}"></span>
                 </div>
                 <div class="track-markers">
-                    <span class="marker" *ngFor="let marker of videoMarkers" [ngStyle]="{'left':marker + '%'}"></span>
+                    <span class="marker" *ngFor="let marker of mediaMarkers" [ngStyle]="{'left':marker + '%'}"></span>
                 </div>
             </div>
             <div class="thumb"
@@ -121,9 +127,9 @@
             </button>
         </div>
     </div>
-    <video #video [src]="videoURL" [loop]="isLoopingEnabled" preload="auto" (onprogress)="isVideoLoading=true"
-        (canplay)="isVideoLoading=false" (loadeddata)="updateAfterVideoInfoLoaded()" (timeupdate)="updateCurrentTime()"
+    <video #video [src]="mediaURL" [loop]="isLoopingEnabled" preload="auto" (onprogress)="isMediaLoading=true"
+        (canplay)="isMediaLoading=false" (loadeddata)="updateAfterVideoInfoLoaded()" (timeupdate)="updateCurrentTime()"
         (click)="togglePlay()">
-        <track kind="captions" srclang="en" src="assets/subtitles.vtt">
+        <track kind="captions" [srclang]="cc.lang" [src]="cc.path" *ngFor="let cc of captions">
     </video>
 </div>
