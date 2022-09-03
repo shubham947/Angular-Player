@@ -24,14 +24,40 @@ export class AppModule { }
 ```
 **OR**
 ```
-<ng-plyr [src]='videoUrl'></ng-plyr>
+<ng-plyr [src]='mediaUrl'></ng-plyr>
 ```
-And assign value to videoUrl in component.ts
+And assign value to mediaUrl in component.ts
 
 ### ng-plyr input attributes
-- **src**: URL of video source (type: string)
-- **loadingImgSrc**: URL of custom loading image (type: string)
-- **bookmarks**: Array of seconds within video max duration (type: Number[])
+| Input               | Type                 | Description                                   |
+| ------------------- | -------------------- | --------------------------------------------- |
+| `src`               | `string`             | URL of media source                           |
+| `loadingImgSrc`     | `string`             | URL of custom loading image                   |
+| `playFrom`          | `number`             | Play media starting from specified second     |
+| `volume`            | `number`             | Keep playing the same media over and over     |
+| `loop`              | `boolean`            | Play media starting from specified second     |
+| `bookmarks`         | `number[]`           | Array of seconds within media max duration    |
+
+### Output events
+| Output              | Type                 | Description                                   |
+| ------------------- | -------------------- | --------------------------------------------- |
+| `playing`           | `boolean`            | Media started to play                         |
+| `paused`            | `boolean`            | Media paused                                  |
+| `ended`             | `boolean`            | Media ended                                   |
+| `fullscreen`        | `boolean`            | Media entered/exited fullscreen               |
+| `volumechange`      | `{ level:number, muted:boolean }` | Volume changed or muted/unmuted  |
+
+
+### Upcoming Inputs and Output events
+| Input               | Type                             | Description                                   |
+| ------------------- | -------------------------------- | --------------------------------------------- |
+| `playlist`          | `[{src:string, type:MediaType}]` | Pass entire playlist to play                  |
+| `type`              | `MediaType ('VIDEO' or 'AUDIO')` | Specify media type                            |
+| `autoplay`          | `boolean`                        | Play next media after current one ends        |
+
+| Output              | Type                 | Description                                   |
+| ------------------- | -------------------- | --------------------------------------------- |
+| `error`             | `object`             | Details of any error if occured               |
 
 ## Features
 - [x] Shortcuts available for different buttons
@@ -41,9 +67,11 @@ And assign value to videoUrl in component.ts
 - [x] Autofetch Video metadata
 - [x] Change playback speed
 - [x] Seek to specific time by clicking on timeline
-- [x] Control for video volume
+- [x] Control for media volume
 - [x] Show loading animation on buffering
-- [ ] Show video title
+- [ ] Play Next/Prev media
+- [ ] Playing audio
+- [ ] Show media title
 - [ ] Button for looping
 - [ ] Switch for autoplay
 
@@ -51,13 +79,15 @@ And assign value to videoUrl in component.ts
 - [x] Provide media src
 - [x] Custom loading image can be set
 - [x] Bookmarks can be shown on timeline
+- [x] Looping the same media
+- [x] Provide more controls like volume, playfrom, loop etc.
+- [X] Emit events from ng-plyr: ended, playing, paused, volumechange, fullscreen etc.
+- [ ] Play Next/Prev media
+- [ ] Playlist support
 - [ ] Hide controls
-- [ ] Hover to play video thumnails
-- [ ] Looping the same video
+- [ ] Hover to play media thumnails
 - [ ] Show bookmark text on hovering a bookmark
 - [ ] Show image previews on hovering timeline
-- [ ] Emit events from ng-plyr: onend, onplay, onpause, onnext, onprev etc.
-- [ ] Provide more controls like volume, playfrom, loop, autoplay etc.
 
 ## Shortcuts
 | Key          | Function             |
