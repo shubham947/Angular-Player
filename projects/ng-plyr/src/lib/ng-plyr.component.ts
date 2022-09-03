@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener, Inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Media, MediaType } from './models/media.model';
 
 @Component({
@@ -13,7 +13,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	isMuted = false;
 	isFullscreen = false;
 	isPIP = false;
-	isAutoplayEnabled = false;
+	// isAutoplayEnabled = false;
 	isLoopingEnabled = false;
 	// Variables
 	seekStepInSec = 5;
@@ -24,6 +24,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	mediaBuffers: Array<{ start: number; end: number }> = [];
 	isMediaLoading = true;
 	media!:Media;
+	mediaTrack:number = 0;
 	// TODO:
 	mediaMarkers: [] = [];
 
@@ -31,13 +32,24 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	inpChanges?: SimpleChanges;
 	// Inputs
 	@Input('src') mediaURL?: string;
-	@Input('type') mediaType?: MediaType;
+	@Input('type') mediaType?:MediaType;
 	@Input('playFrom') playFrom?: number;
 	@Input('loadingImgSrc') loadingImgSrc?: string;
 	@Input('captions') captions?: Array<{ path: string, lang: string }>;
 	@Input('bookmarks') bookmarks?: Array<number>;
 	@Input('volume') volume?: number;
 	@Input('loop') enableLooping?: boolean;
+	@Input('autoplay') isAutoplayEnabled?: boolean;
+	@Input('playlist') playlist?: Media[];
+
+	// Output events
+	@Output() playing = new EventEmitter<boolean>();
+	@Output() paused = new EventEmitter<boolean>();
+	@Output() ended = new EventEmitter<boolean>();
+	@Output() fullscreen = new EventEmitter<boolean>();
+	@Output() volumechange = new EventEmitter<object>();
+	// @Output() error = new EventEmitter<object>();
+	// @Output() pip = new EventEmitter<boolean>();
 
 	// HTML element references
 	@ViewChild('videoContainer') videoContainer!: ElementRef;
@@ -45,7 +57,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 
 	constructor(@Inject(DOCUMENT) private document: any) { }
 
-	resetMedia() {
+	changeMedia() {
 		this.media = new Media();
 		this.media.src = this.mediaURL;
 		this.media.type = MediaType.VIDEO;
@@ -61,7 +73,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	ngOnChanges(changes: SimpleChanges) {
 		this.inpChanges = changes;
 		if (changes['mediaURL']) {
-			this.resetMedia();
+			this.changeMedia();
 		}
 		this.mediaMarkers = changes['bookmarks']?.currentValue;
 		this.isLoopingEnabled = changes['enableLooping']?.currentValue;
@@ -75,6 +87,39 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 		this.document.addEventListener('fullscreenchange', () => {
 			if (!this.document.fullscreenElement) this.isFullscreen = false;
 		});
+	}
+
+	// Output events for media
+	onPlay(event:Event) {
+		this.playing.emit(true);
+		this.paused.emit(false);
+		this.isPlaying = true;
+		this.media.paused = false;
+	}
+
+	onPause(event:Event) {
+		this.playing.emit(false);
+		this.paused.emit(true);
+		this.isPlaying = false;
+		this.media.paused = true;
+	}
+
+	onEnd(event:Event) {
+		this.ended.emit(true);
+		if (this.isAutoplayEnabled) {
+			this.playNextMedia();
+		}
+	}
+
+	onVolumeChange(event:Event) {
+		this.volumechange.emit({
+			level: this.video.nativeElement.volume,
+			muted: this.video.nativeElement.muted
+		});
+	}
+
+	onError(event:Event) {
+		console.error(event);
 	}
 
 	// Shortcut keys
@@ -223,13 +268,6 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 		this.progressPercent =
 			Number((this.video.nativeElement.currentTime / this.video.nativeElement.duration).toPrecision(3)) * 100;
 		this.showBuffers();
-		if (this.video.nativeElement.currentTime >= this.video.nativeElement.duration) {
-			if (this.isAutoplayEnabled) {
-				this.playNextMedia();
-			} else {
-				this.stopVideo();
-			}
-		}
 	}
 
 	// TODO: Play previous video from Q
@@ -241,7 +279,6 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	// End/Stop current video
 	stopVideo() {
 		this.video.nativeElement.pause();
-		this.isPlaying = false;
 		this.seekTo(this.video.nativeElement.duration);
 	}
 
@@ -273,7 +310,6 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 			this.video.nativeElement.currentTime = 0;
 		}
 		this.video.nativeElement.paused ? this.video.nativeElement.play() : this.video.nativeElement.pause();
-		this.isPlaying = !this.video.nativeElement.paused;
 	}
 
 	toggleMute() {
@@ -295,9 +331,11 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 		if (this.document.fullscreenElement) {
 			this.document.exitFullscreen();
 			this.isFullscreen = false;
+			this.fullscreen.emit(false);
 		} else {
 			this.videoContainer.nativeElement.requestFullscreen();
 			this.isFullscreen = true;
+			this.fullscreen.emit(true);
 		}
 	}
 }

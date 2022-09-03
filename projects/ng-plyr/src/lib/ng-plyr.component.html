@@ -1,8 +1,8 @@
 <div #videoContainer class="video-container" [ngClass]="isPlaying ? '' : 'paused'">
     <div class="video-overlay" (click)="togglePlay()">
         <div stopClickPropagation class="loading"
-        [ngStyle]="{'background-image': loadingImgSrc ? 'url(' + loadingImgSrc + ')':'../assets/images/Spinner-multicolor.svg'}"
-        *ngIf="isMediaLoading">
+            [ngStyle]="{'background-image': loadingImgSrc ? 'url(' + loadingImgSrc + ')':'../assets/images/Spinner-multicolor.svg'}"
+            *ngIf="isMediaLoading">
             <!-- <img [src]="loadingImgSrc"> -->
         </div>
         <div class="video-actions" *ngIf="!isMediaLoading && media.paused">
@@ -124,7 +124,8 @@
     </div>
     <video #video [src]="media.src" [loop]="isLoopingEnabled" preload="auto" (onprogress)="isMediaLoading=true"
         (canplay)="isMediaLoading=false" (loadeddata)="updateAfterVideoInfoLoaded()" (timeupdate)="updateCurrentTime()"
-        (click)="togglePlay()" (playing)="media.paused=false" (pause)="media.paused=true">
+        (click)="togglePlay()" (playing)="onPlay($event)" (pause)="onPause($event)" (ended)="onEnd($event)" (volumechange)="onVolumeChange($event)"
+        (error)="onError($event)">
         <track kind="captions" [srclang]="cc.lang" [src]="cc.path" *ngFor="let cc of captions">
     </video>
   </div>
