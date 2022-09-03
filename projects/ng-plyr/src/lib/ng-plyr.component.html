@@ -1,12 +1,12 @@
 <div #videoContainer class="video-container" [ngClass]="isPlaying ? '' : 'paused'">
     <div class="video-overlay" (click)="togglePlay()">
         <div stopClickPropagation class="loading"
-            [ngStyle]="{'background-image': loadingImgSrc ? 'url(' + loadingImgSrc + ')':'../assets/images/Spinner-multicolor.svg'}"
-            *ngIf="isMediaLoading">
+        [ngStyle]="{'background-image': loadingImgSrc ? 'url(' + loadingImgSrc + ')':'../assets/images/Spinner-multicolor.svg'}"
+        *ngIf="isMediaLoading">
             <!-- <img [src]="loadingImgSrc"> -->
         </div>
-        <div class="video-actions" *ngIf="!isMediaLoading && video.paused">
-            <button stopClickPropagation class="play-prev-btn" title="Previous" (click)="playPrevVideo()">
+        <div class="video-actions" *ngIf="!isMediaLoading && media.paused">
+            <button stopClickPropagation class="play-prev-btn" title="Previous" (click)="playPrevMedia()">
                 <svg class="play-prev-icon" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
@@ -17,39 +17,39 @@
                     <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
                 </svg>
             </button>
-            <button stopClickPropagation class="play-next-btn" title="Next" (click)="playNextVideo()">
+            <button stopClickPropagation class="play-next-btn" title="Next" (click)="playNextMedia()">
                 <svg class="play-next-icon" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
                 </svg>
             </button>
         </div>
-        <div class="seek" *ngIf="!isMediaLoading && !video.paused">
-            <button stopClickPropagation class="seek-back-btn" (click)="seekBwd($event)" (dblclick)="seekBwd($event)">
-                <div [ngStyle]="{'display': bwdClickCount>0 ? 'block' : 'none'}">
-                    <div>{{bwdClickCount * seekStepInSec}} seconds</div>
-                    <svg class="seek-back-icon" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" />
-                    </svg>
-                </div>
-            </button>
-            <button stopClickPropagation class="seek-ahead-btn" (click)="seekFwd($event)" (dblclick)="seekFwd($event)">
-                <div [ngStyle]="{'display': fwdClickCount>0 ? 'block' : 'none'}">
-                    <div>{{fwdClickCount * seekStepInSec}} seconds</div>
-                    <svg class="seek-ahead-icon" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" />
-                    </svg>
-                </div>
-            </button>
+        <div class="seek" *ngIf="!isMediaLoading && !media.paused">
+          <button stopClickPropagation class="seek-back-btn" (click)="seekBwd($event)" (dblclick)="seekBwd($event)">
+            <div [ngStyle]="{'display': bwdClickCount>0 ? 'block' : 'none'}">
+              <div>{{bwdClickCount * seekStepInSec}} seconds</div>
+              <svg class="seek-back-icon" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" />
+              </svg>
+            </div>
+          </button>
+          <button stopClickPropagation class="seek-ahead-btn" (click)="seekFwd($event)" (dblclick)="seekFwd($event)">
+            <div [ngStyle]="{'display': fwdClickCount>0 ? 'block' : 'none'}">
+              <div>{{fwdClickCount * seekStepInSec}} seconds</div>
+              <svg class="seek-ahead-icon" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" />
+              </svg>
+            </div>  
+          </button>
         </div>
     </div>
     <div class="video-controls-container">
         <div class="timeline-container">
             <img src="" class="preview-img">
             <input #progressBar type="range" class="timeline-progress" (input)="seekTo(progressBar.value)"
-                [value]="video.currentTime" [max]="video.duration">
+                [value]="media.playFrom" [max]="media.duration">
             <div class="track">
                 <div class="track-progress" [ngStyle]="{'width':progressPercent + '%'}"></div>
                 <div class="track-buffers">
@@ -60,9 +60,7 @@
                     <span class="marker" *ngFor="let marker of mediaMarkers" [ngStyle]="{'left':marker + '%'}"></span>
                 </div>
             </div>
-            <div class="thumb"
-                [ngStyle]="{'left':progressPercent + '%', 'transform': 'translate(-'+ progressPercent + '%,-50%)'}">
-            </div>
+            <div class="thumb" [ngStyle]="{'left':progressPercent + '%', 'transform': 'translate(-'+ progressPercent + '%,-50%)'}"></div>
         </div>
         <div class="controls">
             <button class="play-pause-btn" [title]="isPlaying ? 'Pause (k)' : 'Play (k)'" (click)="togglePlay()">
@@ -73,7 +71,7 @@
                     <path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
                 </svg>
             </button>
-            <button class="play-next-btn" title="Next" (click)="playNextVideo()">
+            <button class="play-next-btn" title="Next" (click)="playNextMedia()">
                 <svg class="play-next-icon" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
@@ -108,28 +106,25 @@
                 {{video.playbackRate}}x
             </button>
             <button class="mini-player-btn" title="Miniplayer (i)" (click)="togglePIP()"
-                [disabled]="!video.currentTime">
+                [disabled]="media.duration === undefined">
                 <svg viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zm-10-7h9v6h-9z" />
+                    <path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zm-10-7h9v6h-9z" />
                 </svg>
             </button>
             <button class="full-screen-btn" [title]="isFullscreen ? 'Exit full screen (f)' : 'Full screen (f)'"
                 (click)="toggleFullscreen()">
                 <svg class="open" viewBox="0 0 24 24" *ngIf="!isFullscreen">
-                    <path fill="currentColor"
-                        d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" />
+                    <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" />
                 </svg>
                 <svg class="close" viewBox="0 0 24 24" *ngIf="isFullscreen">
-                    <path fill="currentColor"
-                        d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" />
+                    <path fill="currentColor" d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" />
                 </svg>
             </button>
         </div>
     </div>
-    <video #video [src]="mediaURL" [loop]="isLoopingEnabled" preload="auto" (onprogress)="isMediaLoading=true"
+    <video #video [src]="media.src" [loop]="isLoopingEnabled" preload="auto" (onprogress)="isMediaLoading=true"
         (canplay)="isMediaLoading=false" (loadeddata)="updateAfterVideoInfoLoaded()" (timeupdate)="updateCurrentTime()"
-        (click)="togglePlay()">
+        (click)="togglePlay()" (playing)="media.paused=false" (pause)="media.paused=true">
         <track kind="captions" [srclang]="cc.lang" [src]="cc.path" *ngFor="let cc of captions">
     </video>
-</div>
+  </div>
