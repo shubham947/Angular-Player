@@ -1,11 +1,11 @@
 export class Media {
     src?: string;
     type?: MediaType;
-    bookmarks?: Array<number>;
-    captions?: Array<{path:string, lang:string}>;
+    playFrom?: number = 0;
     duration?: number;
-
-    // constructor(src, type, bookmarks, captions) {}
+    captions?: Array<{path:string, lang:string}>;
+    bookmarks?: Array<number>;
+    paused?: boolean = true;
 }
 
 export enum MediaType {
