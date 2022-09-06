@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Media, MediaType } from 'ng-plyr';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ export class AppComponent implements OnInit {
   title = 'Angular Player';
   playFrom?:number;
   vol?:number;
+  nextMedia?:Media;
   
   videoSrc = "https://cdn.videvo.net/videvo_files/video/free/2015-02/large_watermarked/Pine_Trees_in_Sunlight_01_Videvo_preview.mp4";
   videoList = [
@@ -19,12 +21,13 @@ export class AppComponent implements OnInit {
   ];
   
   ngOnInit(): void {
-    
+    this.nextMedia = new Media(this.videoList[1], MediaType.VIDEO);
   }
 
   track = 0;
   onEnd(ended:boolean) {
-    this.videoSrc = this.videoList[(++this.track) % this.videoList.length];
+    this.videoSrc = this.videoList[(this.track++) % this.videoList.length];
+    this.nextMedia = new Media(this.videoList[(this.track) % this.videoList.length], MediaType.VIDEO);
   }
   
 }

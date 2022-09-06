@@ -37,6 +37,8 @@ And assign value to mediaUrl in component.ts
 | `volume`            | `number`             | Keep playing the same media over and over     |
 | `loop`              | `boolean`            | Play media starting from specified second     |
 | `bookmarks`         | `number[]`           | Array of seconds within media max duration    |
+| `autoplay`          | `boolean`            | Enable/disable autoplay                       |
+| `nextMedia`         | `Media`              | Media to be played next                       |
 
 ### Output events
 | Output              | Type                 | Description                                   |
@@ -44,16 +46,18 @@ And assign value to mediaUrl in component.ts
 | `playing`           | `boolean`            | Media started to play                         |
 | `paused`            | `boolean`            | Media paused                                  |
 | `ended`             | `boolean`            | Media ended                                   |
+| `onnext`            | `Media`              | Playing next media                            |
+| `onprev`            | `Media`              | Playing previous media                        |
 | `fullscreen`        | `boolean`            | Media entered/exited fullscreen               |
 | `volumechange`      | `{ level:number, muted:boolean }` | Volume changed or muted/unmuted  |
 
 
 ### Upcoming Inputs and Output events
-| Input               | Type                             | Description                                   |
-| ------------------- | -------------------------------- | --------------------------------------------- |
-| `playlist`          | `[{src:string, type:MediaType}]` | Pass entire playlist to play                  |
-| `type`              | `MediaType ('VIDEO' or 'AUDIO')` | Specify media type                            |
-| `autoplay`          | `boolean`                        | Play next media after current one ends        |
+| Input               | Type                              | Description                                  |
+| ------------------- | --------------------------------- | -------------------------------------------- |
+| `playlist`          | `Media[]`                         | Pass entire playlist to play                 |
+| `type`              | `MediaType`                       | Specify media type                           |
+| `captions`          | `[{ path: string, lang: string }]`| Add captions to media                        |
 
 | Output              | Type                 | Description                                   |
 | ------------------- | -------------------- | --------------------------------------------- |
@@ -69,7 +73,7 @@ And assign value to mediaUrl in component.ts
 - [x] Seek to specific time by clicking on timeline
 - [x] Control for media volume
 - [x] Show loading animation on buffering
-- [ ] Play Next/Prev media
+- [x] Play Next/Prev media
 - [ ] Playing audio
 - [ ] Show media title
 - [ ] Button for looping
@@ -81,9 +85,9 @@ And assign value to mediaUrl in component.ts
 - [x] Bookmarks can be shown on timeline
 - [x] Looping the same media
 - [x] Provide more controls like volume, playfrom, loop etc.
-- [X] Emit events from ng-plyr: ended, playing, paused, volumechange, fullscreen etc.
-- [ ] Play Next/Prev media
+- [x] Emit events from ng-plyr: ended, playing, paused, volumechange, fullscreen etc.
 - [ ] Playlist support
+- [ ] Play Next/Prev media
 - [ ] Hide controls
 - [ ] Hover to play media thumnails
 - [ ] Show bookmark text on hovering a bookmark
@@ -98,11 +102,14 @@ And assign value to mediaUrl in component.ts
 | `f`          | Toggle fullscreen    |
 | `k`          | Play/Pause           |
 | `0` or `home`| Go to start          |
+| `1 to 9`     | Go to 10% to 90%     |
 | `end`        | Go to end            |
 | Up arrow     | Volume up            |
 | Down arrow   | Volume down          |
 | Left arrow   | Seek back 5 sec      |
 | Right arrow  | Seek ahead 5 sec     |
+| `Shift + N`  | Play next media      |
+| `Shift + P`  | Play prev media      |
 
 ## Known issues
 - Not supported in all Angular versions

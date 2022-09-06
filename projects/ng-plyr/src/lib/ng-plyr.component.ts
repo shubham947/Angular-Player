@@ -24,14 +24,16 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	mediaBuffers: Array<{ start: number; end: number }> = [];
 	isMediaLoading = true;
 	media!:Media;
-	mediaTrack:number = 0;
+	prevMedia?:Media;
+	mediaPlaylist?:Media[];
+	playingTrack:number = 0;
 	// TODO:
 	mediaMarkers: [] = [];
 
 	// Keeping input changes to trigger required actions on other events (like, after VideoInfoLoaded)
 	inpChanges?: SimpleChanges;
 	// Inputs
-	@Input('src') mediaURL?: string;
+	@Input('src') mediaURL: string = '';
 	@Input('type') mediaType?:MediaType;
 	@Input('playFrom') playFrom?: number;
 	@Input('loadingImgSrc') loadingImgSrc?: string;
@@ -40,12 +42,15 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	@Input('volume') volume?: number;
 	@Input('loop') enableLooping?: boolean;
 	@Input('autoplay') isAutoplayEnabled?: boolean;
+	@Input('nextMedia') nextMedia?: Media;
 	@Input('playlist') playlist?: Media[];
 
 	// Output events
 	@Output() playing = new EventEmitter<boolean>();
 	@Output() paused = new EventEmitter<boolean>();
 	@Output() ended = new EventEmitter<boolean>();
+	@Output() onprev = new EventEmitter<Media>();
+	@Output() onnext = new EventEmitter<Media>();
 	@Output() fullscreen = new EventEmitter<boolean>();
 	@Output() volumechange = new EventEmitter<object>();
 	// @Output() error = new EventEmitter<object>();
@@ -57,11 +62,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 
 	constructor(@Inject(DOCUMENT) private document: any) { }
 
-	changeMedia() {
-		this.media = new Media();
-		this.media.src = this.mediaURL;
-		this.media.type = MediaType.VIDEO;
-		
+	resetPlayer() {
 		this.currentTime = '0:00';
 		this.totalTime = '0:00';
 		this.progressPercent = 0;
@@ -70,10 +71,18 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 		this.mediaMarkers = [];
 	}
 
+	changeMedia(media?:Media) {
+		this.media = media ? media : new Media(this.mediaURL, this.mediaType);
+		this.resetPlayer();
+	}
+
 	ngOnChanges(changes: SimpleChanges) {
 		this.inpChanges = changes;
 		if (changes['mediaURL']) {
 			this.changeMedia();
+		}
+		if (changes['playlist']) {
+			this.onPlaylistChange();
 		}
 		this.mediaMarkers = changes['bookmarks']?.currentValue;
 		this.isLoopingEnabled = changes['enableLooping']?.currentValue;
@@ -118,8 +127,14 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 		});
 	}
 
+	// TODO: Emit custom error
 	onError(event:Event) {
 		console.error(event);
+	}
+
+	// TODO: Actions to take on playlist change
+	onPlaylistChange() {
+
 	}
 
 	// Shortcut keys
@@ -148,8 +163,14 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 			this.changeVolume(vol < 0 ? 0 : vol);
 		} else if (key === '0' || key === 'home') {
 			this.seekTo(0);
+		} else if (Number(key) > 0 && Number(key) < 10 && this.media?.duration) {
+			this.seekTo(this.media.duration * Number(key)/10);
 		} else if (key === 'end') {
 			this.stopVideo();
+		} else if (event.key === 'N') {
+			this.playNextMedia();
+		} else if (event.key === 'P') {
+			this.playPrevMedia();
 		}
 	}
 
@@ -216,7 +237,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 		} else if (atSecond < 0) {
 			this.video.nativeElement.currentTime = 0;
 		} else {
-			this.video.nativeElement.currentTime = atSecond;
+			this.video.nativeElement.currentTime = Number(atSecond).toPrecision(3);
 		}
 		this.progressPercent =
 			Number((this.video.nativeElement.currentTime / this.video.nativeElement.duration).toPrecision(3)) * 100;
@@ -270,11 +291,31 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 		this.showBuffers();
 	}
 
-	// TODO: Play previous video from Q
-	playPrevMedia() { }
+	// Play previous video from Q
+	playPrevMedia() {
+		if (this.mediaPlaylist && this.playingTrack > 0) {
+			this.changeMedia(this.mediaPlaylist[this.playingTrack - 1]);
+			this.onnext.emit(this.mediaPlaylist[this.playingTrack - 1]);
+			this.playingTrack--;
+		} else if (this.prevMedia) {
+			this.changeMedia(this.prevMedia);
+			this.onprev.emit(this.prevMedia);
+		}
+		this.prevMedia = undefined;
+	}
 
-	// TODO: Play next video from Q
-	playNextMedia() { }
+	// Play next video from Q
+	playNextMedia() {
+		if (this.mediaPlaylist && this.playingTrack < this.mediaPlaylist.length - 1) {
+			this.changeMedia(this.mediaPlaylist[this.playingTrack + 1]);
+			this.onnext.emit(this.mediaPlaylist[this.playingTrack + 1]);
+			this.playingTrack++;
+		} else if (this.nextMedia) {
+			this.prevMedia = this.media;
+			this.changeMedia(this.nextMedia);
+			this.onnext.emit(this.nextMedia);
+		}
+	}
 
 	// End/Stop current video
 	stopVideo() {
