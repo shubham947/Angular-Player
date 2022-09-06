@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, EventEmitter, HostListener, Inject, Input, OnChanges, Output, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Media, MediaType } from './models/media.model';
 
 @Component({
@@ -216,7 +216,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 		} else if (atSecond < 0) {
 			this.video.nativeElement.currentTime = 0;
 		} else {
-			this.video.nativeElement.currentTime = atSecond;
+			this.video.nativeElement.currentTime = Number(atSecond).toPrecision(3);
 		}
 		this.progressPercent =
 			Number((this.video.nativeElement.currentTime / this.video.nativeElement.duration).toPrecision(3)) * 100;
