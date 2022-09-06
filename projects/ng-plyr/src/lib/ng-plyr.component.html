@@ -6,7 +6,7 @@
             <!-- <img [src]="loadingImgSrc"> -->
         </div>
         <div class="video-actions" *ngIf="!isMediaLoading && media.paused">
-            <button stopClickPropagation class="play-prev-btn" title="Previous" (click)="playPrevMedia()">
+            <button stopClickPropagation class="play-prev-btn" title="Previous" (click)="playPrevMedia()" [disabled]="!prevMedia">
                 <svg class="play-prev-icon" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
@@ -17,7 +17,7 @@
                     <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
                 </svg>
             </button>
-            <button stopClickPropagation class="play-next-btn" title="Next" (click)="playNextMedia()">
+            <button stopClickPropagation class="play-next-btn" title="Next" (click)="playNextMedia()" [disabled]="!nextMedia">
                 <svg class="play-next-icon" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
@@ -71,7 +71,7 @@
                     <path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
                 </svg>
             </button>
-            <button class="play-next-btn" title="Next" (click)="playNextMedia()">
+            <button class="play-next-btn" title="Next" (click)="playNextMedia()" [disabled]="!nextMedia">
                 <svg class="play-next-icon" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
@@ -128,4 +128,4 @@
         (error)="onError($event)">
         <track kind="captions" [srclang]="cc.lang" [src]="cc.path" *ngFor="let cc of captions">
     </video>
-  </div>
+</div>
