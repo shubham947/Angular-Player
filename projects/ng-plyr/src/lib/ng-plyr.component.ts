@@ -1,14 +1,15 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, OnInit, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Media, MediaType } from './models/media.model';
 import { Playlist, PlaylistItem } from './models/playlist.model';
+import { PlayerService } from './ng-plyr.service';
 
 @Component({
 	selector: 'ng-plyr',
 	templateUrl: './ng-plyr.component.html',
 	styleUrls: [ './ng-plyr.component.scss' ]
 })
-export class NgPlyrComponent implements AfterViewInit, OnChanges {
+export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDestroy {
 	// Flags
 	isPlaying = false;
 	isMuted = false;
@@ -39,7 +40,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	@Input('captions') captions?: Array<{ path: string, lang: string }>;
 	@Input('bookmarks') bookmarks?: Array<number>;
 	@Input('volume') volume?: number;
-	@Input('loop') enableMediaLooping?: boolean;
+	@Input('loop') loopMedia?: boolean;
 	@Input('autoplay') isAutoplayEnabled?: boolean;
 	@Input('playlist') playlist?: Media[];
 
@@ -56,28 +57,27 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	@ViewChild('videoContainer') videoContainer!: ElementRef;
 	@ViewChild('video') video!: ElementRef;
 
-	constructor(@Inject(DOCUMENT) private document: any) { }
+	constructor(@Inject(DOCUMENT) private document: any,
+				private _plyrService:PlayerService) { }
 
-	changeMedia() {
-		this.media = new Media();
-		this.media.src = this.mediaURL;
-		this.media.type = MediaType.VIDEO;
-		
-		this.currentTime = '0:00';
-		this.totalTime = '0:00';
-		this.progressPercent = 0;
-		this.mediaBuffers = [];
-		this.isMediaLoading = true;
-		this.mediaMarkers = [];
-	}
-
+	// Lifecycle hooks
+	// OnChanges LC hook
 	ngOnChanges(changes: SimpleChanges) {
 		this.inpChanges = changes;
-		if (changes['mediaURL']) {
-			this.changeMedia();
-		}
+
+		// When both mediaURL & mediaItems are present, media will be set from mediaItems
+		if (changes['mediaURL'] && !changes['mediaItems']) { this.changeMedia(); }
+		if (changes['mediaItems']) { this.createPlaylist(this.mediaItems!); }
+
+		// nextMediaToAdd after playlist is initialized, or not present in same changes
+		if (changes['nextMediaToAdd'] && !changes['mediaItems']) { this.onNextMediaInput(); }
+		
 		this.mediaMarkers = changes['bookmarks']?.currentValue;
-		this.isLoopingEnabled = changes['enableMediaLooping']?.currentValue;
+		this.isLoopingEnabled = changes['loopMedia']?.currentValue;
+	}
+	
+	ngOnInit() {
+		this._plyrService.addComponentRef(this);
 	}
 
 	ngAfterViewInit() {
@@ -88,6 +88,46 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 		this.document.addEventListener('fullscreenchange', () => {
 			if (!this.document.fullscreenElement) this.isFullscreen = false;
 		});
+	}
+
+	ngOnDestroy() {
+		this._plyrService.removeComponentRef();
+	}
+	
+	
+	resetPlayer() {
+		this.currentTime = '0:00';
+		this.totalTime = '0:00';
+		this.progressPercent = 0;
+		this.mediaBuffers = [];
+		this.isMediaLoading = true;
+		this.mediaMarkers = [];
+	}
+
+	changeMedia(media?:Media) {
+		this.media = media ? media : new Media(this.mediaURL, this.mediaType);
+		this.resetPlayer();
+	}
+
+	// Playlist functions
+	// Create new playlist / reinitialize playlist
+	createPlaylist(mediaItems:Media[]) {
+		if (mediaItems) {
+			this.playlist.initializePlaylist(mediaItems);
+			this.media = this.playlist.current?.media!;
+			if (this.nextMediaToAdd) {
+				this.playlist.addNext(new PlaylistItem(this.nextMediaToAdd));
+			}
+			this.nextMedia = this.playlist.current?.next?.media;
+		}
+	}
+
+	// nextMedia will be used to play next inboth src and playlist cases
+	onNextMediaInput() {
+		if (this.playlist.current && this.nextMediaToAdd) {
+			this.playlist.addNext(new PlaylistItem(this.nextMediaToAdd));
+		}
+		this.nextMedia = this.nextMediaToAdd;
 	}
 
 	// Output events for media
@@ -271,11 +311,61 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 		this.showBuffers();
 	}
 
-	// TODO: Play previous video from Q
-	playPrevMedia() { }
+	// Play previous media from Q
+	playPrevMedia() {
+		if (this.isLoopingEnabled) return this.onprev.emit(this.media);
 
-	// TODO: Play next video from Q
-	playNextMedia() { }
+		let mediaToPlay: Media | undefined;
+		if (this.playlist.current?.hasPrev()) {
+			this.playlist.current = this.playlist.current.prev;
+			mediaToPlay = this.playlist.current?.media;
+			// Update prevMedia
+			if (this.playlist.current?.hasPrev()) {
+				this.prevMedia = this.playlist.current.prev!.media;
+			} else if (this.loopPlaylist) {
+				this.prevMedia = this.playlist.tail?.media;
+			}
+		} else if (this.loopPlaylist) {
+			this.playlist.current = this.playlist.tail;
+			mediaToPlay = this.playlist.current?.media;
+			this.prevMedia = this.playlist.current?.prev?.media;
+		} else if (this.prevMedia) {
+			mediaToPlay = this.prevMedia;
+			this.prevMedia = undefined;
+		}
+
+		this.nextMedia = this.media;
+		this.changeMedia(mediaToPlay);
+		this.onprev.emit(mediaToPlay);
+	}
+	
+	// Play next media from Q
+	playNextMedia() {
+		if (this.isLoopingEnabled) return this.onnext.emit(this.media);
+
+		let mediaToPlay: Media | undefined;
+		if (this.playlist.current?.hasNext()) {
+			this.playlist.current = this.playlist.current.next;
+			mediaToPlay = this.playlist.current?.media;
+			// Updating nextMedia
+			if (this.playlist.current?.hasNext()) {
+				this.nextMedia = this.playlist.current.next!.media;
+			} else if (this.loopPlaylist) {
+				this.nextMedia = this.playlist.head?.media;
+			}
+		} else if (this.loopPlaylist) {
+			this.playlist.current = this.playlist.head;
+			mediaToPlay = this.playlist.current?.media;
+			this.nextMedia = this.playlist.current?.next?.media;
+		} else if (this.nextMedia) {
+			mediaToPlay = this.nextMedia;
+			this.nextMedia = undefined;
+		}
+		
+		this.prevMedia = this.media;
+		this.changeMedia(mediaToPlay);
+		this.onnext.emit(mediaToPlay);
+	}
 
 	// End/Stop current video
 	stopVideo() {

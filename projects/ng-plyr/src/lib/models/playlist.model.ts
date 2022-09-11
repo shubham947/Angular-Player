@@ -159,9 +159,7 @@ export class Playlist {
     contains(item:PlaylistItem):boolean {
         let start = this.head;
         while(start) {
-            if (item === start) {
-                return true;
-            }
+            if (item === start) return true;
             start = start.next;
         }
         return false;
