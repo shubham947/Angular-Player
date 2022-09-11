@@ -26,7 +26,13 @@ export class AppModule { }
 ```
 <ng-plyr [src]='mediaUrl'></ng-plyr>
 ```
+**OR**
+```
+<ng-plyr [playlist]='mediaArr'></ng-plyr>
+```
 And assign value to mediaUrl in component.ts
+
+**Note:** `playlist` is preferred over `src`, so if both are passed, media will play from `playlist`
 
 ### ng-plyr input attributes
 | Input               | Type                 | Description                                   |
@@ -39,6 +45,8 @@ And assign value to mediaUrl in component.ts
 | `bookmarks`         | `number[]`           | Array of seconds within media max duration    |
 | `autoplay`          | `boolean`            | Enable/disable autoplay                       |
 | `nextMedia`         | `Media`              | Media to be played next                       |
+| `playlist`          | `Media[]`            | Pass entire playlist to play                  |
+| `loopPlaylist`      | `boolean`            | Loop over playlist                            |
 
 ### Output events
 | Output              | Type                 | Description                                   |
@@ -55,7 +63,6 @@ And assign value to mediaUrl in component.ts
 ### Upcoming Inputs and Output events
 | Input               | Type                              | Description                                  |
 | ------------------- | --------------------------------- | -------------------------------------------- |
-| `playlist`          | `Media[]`                         | Pass entire playlist to play                 |
 | `type`              | `MediaType`                       | Specify media type                           |
 | `captions`          | `[{ path: string, lang: string }]`| Add captions to media                        |
 
@@ -74,10 +81,11 @@ And assign value to mediaUrl in component.ts
 - [x] Control for media volume
 - [x] Show loading animation on buffering
 - [x] Play Next/Prev media
+- [x] Button for looping
 - [ ] Playing audio
 - [ ] Show media title
-- [ ] Button for looping
 - [ ] Switch for autoplay
+- [ ] Cast to other devices
 
 ### For Developers
 - [x] Provide media src
@@ -86,7 +94,7 @@ And assign value to mediaUrl in component.ts
 - [x] Looping the same media
 - [x] Provide more controls like volume, playfrom, loop etc.
 - [x] Emit events from ng-plyr: ended, playing, paused, volumechange, fullscreen etc.
-- [ ] Playlist support
+- [x] Playlist support
 - [ ] Play Next/Prev media
 - [ ] Hide controls
 - [ ] Hover to play media thumnails
@@ -114,6 +122,9 @@ And assign value to mediaUrl in component.ts
 ## Known issues
 - Not supported in Angular versions < 14.0.0
 - Volume slider UI
+
+### Changelog
+[CHANGELOG.md](CHANGELOG.md)
 
 ## References
 - Youtube Video: https://youtube.com/watch?v=ZeNyjnneq_w

@@ -1,4 +1,5 @@
 export class Media {
+    id?:string;
     src: string;
     type: MediaType;
     poster?:string;
