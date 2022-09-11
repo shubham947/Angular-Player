@@ -70,6 +70,26 @@ And assign value to mediaUrl in component.ts
 | ------------------- | -------------------- | --------------------------------------------- |
 | `error`             | `object`             | Details of any error if occured               |
 
+### Methods
+| Method(arg:type)                                | Description                                   |
+| ----------------------------------------------- | --------------------------------------------- |
+| `play()`                                        | Play current media                            |
+| `pause()`                                       | Pause current media                           |
+| `next()`                                        | Play next media                               |
+| `prev()`                                        | Play prev media                               |
+| `enableMediaLooping(loop?:boolean)`             | Turn on loop for media (default true)         |
+| `enablePlaylistLooping(loop?:boolean)`          | Turn on loop for playlist (default true)      |
+| `changeVolume(level:number)`                    | Set volume to level (0 to 1)                  |
+| `seekTo(atSecond:number)`                       | Seek media to specific second                 |
+| `setPlaybackSpeed(rate:number)`                 | Set media playback rate (range, .25 to 2)     |
+
+| `getCurrentlyPlaying()`                         | Get currently playing Media                   |
+| `getNextMedia()`                                | Get nextMedia                                 |
+| `getNumOfMediaInPlaylist()`                     | Get number of media items in playlist         |
+
+| `addToPlaylist(mediaItems:Media[], atStart?:boolean)` | Add mediaItems to playlist at end/start |
+| `playNext(media:Media[])`                       | Add media to playlist after current media     |
+
 ## Features
 - [x] Shortcuts available for different buttons
 - [x] Can switch to PIP and Fullscreen
@@ -95,8 +115,9 @@ And assign value to mediaUrl in component.ts
 - [x] Provide more controls like volume, playfrom, loop etc.
 - [x] Emit events from ng-plyr: ended, playing, paused, volumechange, fullscreen etc.
 - [x] Playlist support
-- [ ] Play Next/Prev media
+- [x] Access to Player methods: play, pause, next, prev etc.
 - [ ] Hide controls
+- [ ] Multiple media sources
 - [ ] Hover to play media thumnails
 - [ ] Show bookmark text on hovering a bookmark
 - [ ] Show image previews on hovering timeline

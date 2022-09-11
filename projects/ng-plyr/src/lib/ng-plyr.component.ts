@@ -1,14 +1,15 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, OnInit, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Media, MediaType } from './models/media.model';
 import { Playlist, PlaylistItem } from './models/playlist.model';
+import { PlayerService } from './ng-plyr.service';
 
 @Component({
 	selector: 'ng-plyr',
 	templateUrl: './ng-plyr.component.html',
 	styleUrls: [ './ng-plyr.component.scss' ]
 })
-export class NgPlyrComponent implements AfterViewInit, OnChanges {
+export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDestroy {
 	// Flags
 	isPlaying = false;
 	isMuted = false;
@@ -42,7 +43,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	@Input('captions') captions?: Array<{ path: string, lang: string }>;
 	@Input('bookmarks') bookmarks?: Array<number>;
 	@Input('volume') volume?: number;
-	@Input('loop') enableMediaLooping?: boolean;
+	@Input('loop') loopMedia?: boolean;
 	@Input('autoplay') isAutoplayEnabled?: boolean;
 	@Input('nextMedia') nextMediaToAdd?: Media;
 	@Input('playlist') mediaItems?: Media[];
@@ -63,8 +64,44 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	@ViewChild('videoContainer') videoContainer!: ElementRef;
 	@ViewChild('video') video!: ElementRef;
 
-	constructor(@Inject(DOCUMENT) private document: any) { }
+	constructor(@Inject(DOCUMENT) private document: any,
+				private _plyrService:PlayerService) { }
 
+	// Lifecycle hooks
+	// OnChanges LC hook
+	ngOnChanges(changes: SimpleChanges) {
+		this.inpChanges = changes;
+
+		// When both mediaURL & mediaItems are present, media will be set from mediaItems
+		if (changes['mediaURL'] && !changes['mediaItems']) { this.changeMedia(); }
+		if (changes['mediaItems']) { this.createPlaylist(this.mediaItems!); }
+
+		// nextMediaToAdd after playlist is initialized, or not present in same changes
+		if (changes['nextMediaToAdd'] && !changes['mediaItems']) { this.onNextMediaInput(); }
+		
+		this.mediaMarkers = changes['bookmarks']?.currentValue;
+		this.isLoopingEnabled = changes['loopMedia']?.currentValue;
+	}
+	
+	ngOnInit() {
+		this._plyrService.addComponentRef(this);
+	}
+
+	ngAfterViewInit() {
+		this.isPlaying = !this.video.nativeElement.paused;
+		this.isMuted = this.video.nativeElement.muted;
+		this.isFullscreen = this.document.fullscreenElement ? true : false;
+
+		this.document.addEventListener('fullscreenchange', () => {
+			if (!this.document.fullscreenElement) this.isFullscreen = false;
+		});
+	}
+
+	ngOnDestroy() {
+		this._plyrService.removeComponentRef();
+	}
+	
+	
 	resetPlayer() {
 		this.currentTime = '0:00';
 		this.totalTime = '0:00';
@@ -98,32 +135,6 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 			this.playlist.addNext(new PlaylistItem(this.nextMediaToAdd));
 		}
 		this.nextMedia = this.nextMediaToAdd;
-	}
-
-	// Lifecycle hooks
-	// OnChanges LC hook
-	ngOnChanges(changes: SimpleChanges) {
-		this.inpChanges = changes;
-
-		// When both mediaURL & mediaItems are present, media will be set from mediaItems
-		if (changes['mediaURL'] && !changes['mediaItems']) { this.changeMedia(); }
-		if (changes['mediaItems']) { this.createPlaylist(this.mediaItems!); }
-
-		// nextMediaToAdd after playlist is initialized, or not present in same changes
-		if (changes['nextMediaToAdd'] && !changes['mediaItems']) { this.onNextMediaInput() }
-
-		this.mediaMarkers = changes['bookmarks']?.currentValue;
-		this.isLoopingEnabled = changes['enableMediaLooping']?.currentValue;
-	}
-
-	ngAfterViewInit() {
-		this.isPlaying = !this.video.nativeElement.paused;
-		this.isMuted = this.video.nativeElement.muted;
-		this.isFullscreen = this.document.fullscreenElement ? true : false;
-
-		this.document.addEventListener('fullscreenchange', () => {
-			if (!this.document.fullscreenElement) this.isFullscreen = false;
-		});
 	}
 
 	// Output events for media
@@ -317,7 +328,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	// Play previous media from Q
 	playPrevMedia() {
 		if (this.isLoopingEnabled) return this.onprev.emit(this.media);
-		
+
 		let mediaToPlay: Media | undefined;
 		if (this.playlist.current?.hasPrev()) {
 			this.playlist.current = this.playlist.current.prev;
