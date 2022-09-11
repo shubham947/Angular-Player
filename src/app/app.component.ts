@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   playFrom?:number;
   vol?:number;
   nextMedia?:Media;
+  mediaItems:Media[] = [];
   
   videoList = [
     "https://joy.videvo.net/videvo_files/video/free/2021-04/large_watermarked/210329_06B_Bali_1080p_013_preview.mp4",
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit {
   
   ngOnInit(): void {
     // this.nextMedia = new Media(this.videoList[1], MediaType.VIDEO);
+    this.videoList.forEach((src)=> this.mediaItems.push(new Media(src)) );
   }
 
   track = 0;
