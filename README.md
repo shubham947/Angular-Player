@@ -26,7 +26,13 @@ export class AppModule { }
 ```
 <ng-plyr [src]='mediaUrl'></ng-plyr>
 ```
+**OR**
+```
+<ng-plyr [playlist]='mediaArr'></ng-plyr>
+```
 And assign value to mediaUrl in component.ts
+
+**Note:** `playlist` is preferred over `src`, so if both are passed, media will play from `playlist`
 
 ### ng-plyr input attributes
 | Input               | Type                 | Description                                   |
@@ -72,8 +78,8 @@ And assign value to mediaUrl in component.ts
 - [ ] Play Next/Prev media
 - [ ] Playing audio
 - [ ] Show media title
-- [ ] Button for looping
 - [ ] Switch for autoplay
+- [ ] Cast to other devices
 
 ### For Developers
 - [x] Provide media src

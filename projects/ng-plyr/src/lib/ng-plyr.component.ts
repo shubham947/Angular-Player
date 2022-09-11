@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Media, MediaType } from './models/media.model';
+import { Playlist, PlaylistItem } from './models/playlist.model';
 
 @Component({
 	selector: 'ng-plyr',
@@ -38,7 +39,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 	@Input('captions') captions?: Array<{ path: string, lang: string }>;
 	@Input('bookmarks') bookmarks?: Array<number>;
 	@Input('volume') volume?: number;
-	@Input('loop') enableLooping?: boolean;
+	@Input('loop') enableMediaLooping?: boolean;
 	@Input('autoplay') isAutoplayEnabled?: boolean;
 	@Input('playlist') playlist?: Media[];
 
@@ -76,7 +77,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges {
 			this.changeMedia();
 		}
 		this.mediaMarkers = changes['bookmarks']?.currentValue;
-		this.isLoopingEnabled = changes['enableLooping']?.currentValue;
+		this.isLoopingEnabled = changes['enableMediaLooping']?.currentValue;
 	}
 
 	ngAfterViewInit() {
