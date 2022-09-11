@@ -12,22 +12,24 @@ export class AppComponent implements OnInit {
   vol?:number;
   nextMedia?:Media;
   
-  videoSrc = "https://cdn.videvo.net/videvo_files/video/free/2015-02/large_watermarked/Pine_Trees_in_Sunlight_01_Videvo_preview.mp4";
   videoList = [
-    "https://cdn.videvo.net/videvo_files/video/free/2015-02/large_watermarked/Pine_Trees_in_Sunlight_01_Videvo_preview.mp4",
-    "https://cdn.videvo.net/videvo_files/video/free/2016-05/large_watermarked/482952308_preview.mp4",
-    "https://cdn.videvo.net/videvo_files/video/free/2016-01/large_watermarked/Countryside_16_1_Videvo_preview.mp4",
-    "https://cdn.videvo.net/videvo_files/video/free/2014-12/large_watermarked/Sqirrel_Eats_Close_preview.mp4"
+    "https://joy.videvo.net/videvo_files/video/free/2021-04/large_watermarked/210329_06B_Bali_1080p_013_preview.mp4",
+    "https://joy.videvo.net/videvo_files/video/free/2021-04/large_watermarked/210329_06B_Bali_1080p_005_preview.mp4",
+    "https://joy.videvo.net/videvo_files/video/free/2021-04/large_watermarked/210329_06B_Bali_1080p_007_preview.mp4",
+    "https://joy.videvo.net/videvo_files/video/free/2021-04/large_watermarked/210329_13B_Bali_1080p_005_preview.mp4",
+    "https://joy.videvo.net/videvo_files/video/free/2021-04/large_watermarked/210329_01A_Bali_4k_021_preview.mp4",
+    "https://joy.videvo.net/videvo_files/video/free/2021-04/large_watermarked/210329_01B_Bali_1080p_009_preview.mp4"
   ];
+  videoSrc = this.videoList[0];
   
   ngOnInit(): void {
-    this.nextMedia = new Media(this.videoList[1], MediaType.VIDEO);
+    // this.nextMedia = new Media(this.videoList[1], MediaType.VIDEO);
   }
 
   track = 0;
   onEnd(ended:boolean) {
-    this.videoSrc = this.videoList[(this.track++) % this.videoList.length];
-    this.nextMedia = new Media(this.videoList[(this.track) % this.videoList.length], MediaType.VIDEO);
+    // this.videoSrc = this.videoList[(this.track++) % this.videoList.length];
+    // this.nextMedia = new Media(this.videoList[(this.track) % this.videoList.length], MediaType.VIDEO);
   }
   
 }
