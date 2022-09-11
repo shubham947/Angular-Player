@@ -82,11 +82,9 @@ And assign value to mediaUrl in component.ts
 | `changeVolume(level:number)`                    | Set volume to level (0 to 1)                  |
 | `seekTo(atSecond:number)`                       | Seek media to specific second                 |
 | `setPlaybackSpeed(rate:number)`                 | Set media playback rate (range, .25 to 2)     |
-
 | `getCurrentlyPlaying()`                         | Get currently playing Media                   |
 | `getNextMedia()`                                | Get nextMedia                                 |
 | `getNumOfMediaInPlaylist()`                     | Get number of media items in playlist         |
-
 | `addToPlaylist(mediaItems:Media[], atStart?:boolean)` | Add mediaItems to playlist at end/start |
 | `playNext(media:Media[])`                       | Add media to playlist after current media     |
 
