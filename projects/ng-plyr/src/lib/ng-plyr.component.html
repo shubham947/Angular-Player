@@ -1,4 +1,18 @@
 <div #videoContainer class="video-container" [ngClass]="isPlaying ? '' : 'paused'">
+    <div class="video-header-container">
+        <button class="menu-icon-btn" title="Menu" (click)="isMenuSettingsOpen = !isMenuSettingsOpen">
+            <svg class="menu-icon" viewBox="0 -960 960 960" *ngIf="!isPlaying">
+                <path fill="currentColor" d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
+            </svg>
+        </button>
+        <span class="title">
+            {{media.title}}
+        </span>
+        <div class="menu-box" [ngClass]="isMenuSettingsOpen ? '': 'hidden'">
+            <!-- <input type="file" name="Select file to play" (change)="onLocalFileSelected($event)"> -->
+            <button stopClickPropagation (click)="stopVideo()">Stop Playing</button>
+        </div>
+    </div>
     <div class="video-overlay" (click)="togglePlay()">
         <div stopClickPropagation class="loading"
             [ngStyle]="{'background-image': loadingImgSrc ? 'url(' + loadingImgSrc + ')':'../assets/images/Spinner-multicolor.svg'}"
@@ -102,36 +116,68 @@
                 /
                 <span class="total-time">{{totalTime}}</span>
             </div>
-            <button class="loop-btn" (click)="toggleLoop()"
-                [title]="isLoopingEnabled ? 'Looping one': loopPlaylist ? 'Looping all' : 'Looping off'">
-                <svg title="Loop off" viewBox="0 0 24 24" *ngIf="!loopPlaylist && !isLoopingEnabled">
-                    <path fill="currentColor" d="M2,5.27L3.28,4L20,20.72L18.73,22L15.73,19H7V22L3,18L7,14V17H13.73L7,10.27V11H5V8.27L2,5.27M17,13H19V17.18L17,15.18V13M17,5V2L21,6L17,10V7H8.82L6.82,5H17Z" />
-                </svg>
-                <svg title="Loop one" viewBox="0 0 48 48" *ngIf="loopPlaylist && !isLoopingEnabled">
-                    <path fill="currentColor" d="m14 44-8-8 8-8 2.1 2.2-4.3 4.3H35v-8h3v11H11.8l4.3 4.3Zm-4-22.5v-11h26.2l-4.3-4.3L34 4l8 8-8 8-2.1-2.2 4.3-4.3H13v8Z"/>
-                </svg>
-                <svg title="Loop all" viewBox="0 0 48 48" *ngIf="isLoopingEnabled">
-                    <path fill="currentColor" d="m14 44-8-8 8-8 2.1 2.2-4.3 4.3H35v-8h3v11H11.8l4.3 4.3Zm9.3-14.1v-9.45h-2.8V18h5.25v11.9ZM10 21.5v-11h26.2l-4.3-4.3L34 4l8 8-8 8-2.1-2.2 4.3-4.3H13v8Z"/>
-                </svg>
-            </button>
-            <button class="speed-btn wide-btn" (click)="setPlaybackSpeed(video.playbackRate % 2 + .25)">
-                {{video.playbackRate}}x
-            </button>
-            <button class="mini-player-btn" title="Miniplayer (i)" (click)="togglePIP()"
-                [disabled]="media.duration === undefined">
-                <svg viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zm-10-7h9v6h-9z" />
-                </svg>
-            </button>
-            <button class="full-screen-btn" [title]="isFullscreen ? 'Exit full screen (f)' : 'Full screen (f)'"
-                (click)="toggleFullscreen()">
-                <svg class="open" viewBox="0 0 24 24" *ngIf="!isFullscreen">
-                    <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" />
-                </svg>
-                <svg class="close" viewBox="0 0 24 24" *ngIf="isFullscreen">
-                    <path fill="currentColor" d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" />
-                </svg>
-            </button>
+            <span class="right-side-btns">
+                <button class="loop-btn" (click)="toggleLoop()"
+                    [title]="isLoopingEnabled ? 'Looping one': loopPlaylist ? 'Looping all' : 'Looping off'">
+                    <svg title="Loop off" viewBox="0 0 24 24" *ngIf="!loopPlaylist && !isLoopingEnabled">
+                        <path fill="currentColor" d="M2,5.27L3.28,4L20,20.72L18.73,22L15.73,19H7V22L3,18L7,14V17H13.73L7,10.27V11H5V8.27L2,5.27M17,13H19V17.18L17,15.18V13M17,5V2L21,6L17,10V7H8.82L6.82,5H17Z" />
+                    </svg>
+                    <svg title="Loop one" viewBox="0 0 48 48" *ngIf="loopPlaylist && !isLoopingEnabled">
+                        <path fill="currentColor" d="m14 44-8-8 8-8 2.1 2.2-4.3 4.3H35v-8h3v11H11.8l4.3 4.3Zm-4-22.5v-11h26.2l-4.3-4.3L34 4l8 8-8 8-2.1-2.2 4.3-4.3H13v8Z"/>
+                    </svg>
+                    <svg title="Loop all" viewBox="0 0 48 48" *ngIf="isLoopingEnabled">
+                        <path fill="currentColor" d="m14 44-8-8 8-8 2.1 2.2-4.3 4.3H35v-8h3v11H11.8l4.3 4.3Zm9.3-14.1v-9.45h-2.8V18h5.25v11.9ZM10 21.5v-11h26.2l-4.3-4.3L34 4l8 8-8 8-2.1-2.2 4.3-4.3H13v8Z"/>
+                    </svg>
+                </button>
+                <button class="settings-btn" title="Settings" (click)="isControlSettingsOpen = !isControlSettingsOpen">
+                    <svg class="settings-icon" viewBox="0 -960 960 960">
+                        <path fill="currentColor" d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm112-260q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Z"/>
+                    </svg>
+                    <div class="menu-box" [ngClass]="isControlSettingsOpen ? '': 'hidden'">
+                        <button stopClickPropagation class="loop-btn" (click)="toggleLoop()"
+                            [title]="isLoopingEnabled ? 'Looping one': loopPlaylist ? 'Looping all' : 'Looping off'">
+                            <svg title="Loop off" viewBox="0 0 24 24" *ngIf="!loopPlaylist && !isLoopingEnabled">
+                                <path fill="currentColor" d="M2,5.27L3.28,4L20,20.72L18.73,22L15.73,19H7V22L3,18L7,14V17H13.73L7,10.27V11H5V8.27L2,5.27M17,13H19V17.18L17,15.18V13M17,5V2L21,6L17,10V7H8.82L6.82,5H17Z" />
+                            </svg>
+                            <svg title="Loop one" viewBox="0 0 48 48" *ngIf="loopPlaylist && !isLoopingEnabled">
+                                <path fill="currentColor" d="m14 44-8-8 8-8 2.1 2.2-4.3 4.3H35v-8h3v11H11.8l4.3 4.3Zm-4-22.5v-11h26.2l-4.3-4.3L34 4l8 8-8 8-2.1-2.2 4.3-4.3H13v8Z"/>
+                            </svg>
+                            <svg title="Loop all" viewBox="0 0 48 48" *ngIf="isLoopingEnabled">
+                                <path fill="currentColor" d="m14 44-8-8 8-8 2.1 2.2-4.3 4.3H35v-8h3v11H11.8l4.3 4.3Zm9.3-14.1v-9.45h-2.8V18h5.25v11.9ZM10 21.5v-11h26.2l-4.3-4.3L34 4l8 8-8 8-2.1-2.2 4.3-4.3H13v8Z"/>
+                            </svg>
+                            <span>Loop {{isLoopingEnabled ? 'all': loopPlaylist ? 'one' : 'off'}}</span>
+                        </button>
+                        <button stopClickPropagation title="Change playback speed" (click)="setPlaybackSpeed(video.playbackRate % 2 + .25)">
+                            <span class="icon">{{video.playbackRate}}x </span>
+                            <span>Speed</span>
+                        </button>
+                    </div>
+                </button>
+                <button class="mini-player-btn" title="Miniplayer (i)" (click)="togglePIP()"
+                    [disabled]="media.duration === undefined">
+                    <svg viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zm-10-7h9v6h-9z" />
+                    </svg>
+                </button>
+                <button class="cast-screen-btn" [title]="checkCastingStatus() ? 'Stop casting' : 'Cast to screen'"
+                    (click)="checkCastingStatus() ? endCurrentSession(true) : castToChromecast()">
+                    <svg class="" viewBox="0 -960 960 960" *ngIf="!checkCastingStatus()">
+                        <path fill="currentColor" d="M480-480Zm320 320H600q0-20-1.5-40t-4.5-40h206v-480H160v46q-20-3-40-4.5T80-680v-40q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160Zm-720 0v-120q50 0 85 35t35 85H80Zm200 0q0-83-58.5-141.5T80-360v-80q117 0 198.5 81.5T360-160h-80Zm160 0q0-75-28.5-140.5t-77-114q-48.5-48.5-114-77T80-520v-80q91 0 171 34.5T391-471q60 60 94.5 140T520-160h-80Z"/>
+                    </svg>
+                    <svg class="" viewBox="0 -960 960 960" *ngIf="checkCastingStatus()">
+                        <path fill="currentColor" d="M720-320H575q-35-109-111.5-192T281-640h439v320ZM80-160v-120q50 0 85 35t35 85H80Zm200 0q0-83-58.5-141.5T80-360v-80q117 0 198.5 81.5T360-160h-80Zm160 0q0-75-28.5-140.5t-77-114q-48.5-48.5-114-77T80-520v-80q91 0 171 34.5T391-471q60 60 94.5 140T520-160h-80Zm360 0H600q0-20-1.5-40t-4.5-40h206v-480H160v46q-20-3-40-4.5T80-680v-40q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160Z"/>
+                    </svg>
+                </button>
+                <button class="full-screen-btn" [title]="isFullscreen ? 'Exit full screen (f)' : 'Full screen (f)'"
+                    (click)="toggleFullscreen()">
+                    <svg class="open" viewBox="0 0 24 24" *ngIf="!isFullscreen">
+                        <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" />
+                    </svg>
+                    <svg class="close" viewBox="0 0 24 24" *ngIf="isFullscreen">
+                        <path fill="currentColor" d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" />
+                    </svg>
+                </button>
+            </span>
         </div>
     </div>
     <video #video [src]="media.src" [loop]="isLoopingEnabled" preload="auto" (onprogress)="isMediaLoading=true"

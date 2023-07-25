@@ -2,7 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, OnInit, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Media, MediaType } from './models/media.model';
 import { Playlist, PlaylistItem } from './models/playlist.model';
-import { PlayerService } from './ng-plyr.service';
+import { PlayerService } from './services/ng-plyr.service';
+import { CastService } from './services/cast.service';
 
 @Component({
 	selector: 'ng-plyr',
@@ -17,6 +18,9 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	isPIP = false;
 	// isAutoplayEnabled = false;
 	isLoopingEnabled = false;
+	isControlSettingsOpen = false;
+	isMenuSettingsOpen = false;
+
 	// Variables
 	seekStepInSec = 5;
 	playerVolume = 1;
@@ -65,7 +69,8 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	@ViewChild('video') video!: ElementRef;
 
 	constructor(@Inject(DOCUMENT) private document: any,
-				private _plyrService:PlayerService) { }
+				private _plyrService:PlayerService,
+				private _castService:CastService) { }
 
 	// Lifecycle hooks
 	// OnChanges LC hook
@@ -113,6 +118,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 
 	changeMedia(media?:Media) {
 		this.media = media ? media : new Media(this.mediaURL, this.mediaType);
+		this._castService.loadMedia(media?.src);
 		this.resetPlayer();
 	}
 
@@ -143,6 +149,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 		this.paused.emit(false);
 		this.isPlaying = true;
 		this.media.paused = false;
+		this._castService.playOrPauseCasting();
 	}
 
 	onPause(event:Event) {
@@ -150,6 +157,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 		this.paused.emit(true);
 		this.isPlaying = false;
 		this.media.paused = true;
+		this._castService.playOrPauseCasting();
 	}
 
 	onEnd(event:Event) {
@@ -215,6 +223,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 
 		this.video.nativeElement.volume = value;
 		this.playerVolume = value;
+		this._castService.setVolumeLevel(value);
 		if (this.video.nativeElement.muted && value > 0) {
 			this.toggleMute();
 		}
@@ -268,10 +277,12 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 		if (atSecond > this.video.nativeElement.duration) {
 			this.stopVideo();
 			return;
-		} else if (atSecond < 0) {
+		} else if (Number(atSecond) < 0) {
 			this.video.nativeElement.currentTime = 0;
+			this._castService.seekTo(0);
 		} else {
 			this.video.nativeElement.currentTime = Number(atSecond).toPrecision(3);
+			this._castService.seekTo(Number(atSecond));
 		}
 		this.progressPercent =
 			Number((this.video.nativeElement.currentTime / this.video.nativeElement.duration).toPrecision(3)) * 100;
@@ -385,12 +396,46 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	stopVideo() {
 		this.video.nativeElement.pause();
 		this.seekTo(this.video.nativeElement.duration);
+		this._castService.stopCasting();
 	}
 
 	setPlaybackSpeed(rate: number) {
 		if (rate < 0.25 || rate > 2) return;
 		this.video.nativeElement.playbackRate = rate;
 	}
+
+	// Initialize Cast and requestSession
+	castToChromecast() {
+		// Initialize Cast API
+		this._castService.initializeCastApi();
+
+		// Get the CastContext and show the Cast dialog to the user
+		let castContext = this._castService.getCastContext();
+		// Starts media casting after session starts
+		castContext.requestSession().then((session: any)=> {
+			this._castService.loadMedia(this.media.src, 'video/mp4');
+		}).catch((err: any)=> {
+			console.error(err);
+		});
+	}
+
+	// Stop casting or just stop session
+	endCurrentSession(stopCasting: boolean) {
+		this._castService.endCurrentSession(stopCasting);
+	}
+
+	// Whether isCasting
+	checkCastingStatus(): boolean {
+		return this._castService.isCasting();
+	}
+
+	// To Do: Implement with a backend server
+	// onLocalFileSelected(event: Event) {
+	// 	const inputElement = event.target as HTMLInputElement;
+	// 	if (inputElement?.files?.length) {
+	// 		console.log(inputElement?.files);
+	// 	}
+	// }
 
 	// Utility functions
 	formatDuration(time: any): string {
@@ -420,6 +465,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	toggleMute() {
 		this.video.nativeElement.muted = !this.video.nativeElement.muted;
 		this.isMuted = this.video.nativeElement.muted;
+		this._castService.muteOrUnmute();
 	}
 
 	togglePIP() {

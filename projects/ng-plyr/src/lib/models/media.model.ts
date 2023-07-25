@@ -2,6 +2,7 @@ export class Media {
     id?:string;
     src: string;
     type: MediaType;
+    title?:string;
     poster?:string;
     playFrom?: number = 0;
     duration?: number;

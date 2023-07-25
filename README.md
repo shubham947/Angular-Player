@@ -1,6 +1,7 @@
 # Angular Player
 
 An HTML5 media player, built using Angular. It has interface similar to Youtube player.
+It can be used in Angular >= 14.
 
 ## Usage
 ### Add NgPlyr to your AppModule:
@@ -100,10 +101,10 @@ And assign value to mediaUrl in component.ts
 - [x] Show loading animation on buffering
 - [x] Play Next/Prev media
 - [x] Button for looping
+- [x] Show media title
+- [x] Cast to other devices
 - [ ] Playing audio
-- [ ] Show media title
 - [ ] Switch for autoplay
-- [ ] Cast to other devices
 
 ### For Developers
 - [x] Provide media src
@@ -114,6 +115,7 @@ And assign value to mediaUrl in component.ts
 - [x] Emit events from ng-plyr: ended, playing, paused, volumechange, fullscreen etc.
 - [x] Playlist support
 - [x] Access to Player methods: play, pause, next, prev etc.
+- [x] Cast service methods are accessible
 - [ ] Hide controls
 - [ ] Multiple media sources
 - [ ] Hover to play media thumnails
@@ -138,6 +140,12 @@ And assign value to mediaUrl in component.ts
 | `Shift + N`  | Play next media      |
 | `Shift + P`  | Play prev media      |
 
+## Cast setup
+Add below script in `index.html`
+```
+<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+```
+Now you an use CastService methods in your components.
+
 ## Known issues
-- Not supported in all Angular versions
 - Volume slider UI
