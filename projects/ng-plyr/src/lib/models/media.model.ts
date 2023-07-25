@@ -1,8 +1,11 @@
 export class Media {
     id?:string;
     src: string;
+    sources?: Array<string>;
     type: MediaType;
     title?:string;
+    description?:string;
+    thumb?:string;
     poster?:string;
     playFrom?: number = 0;
     duration?: number;

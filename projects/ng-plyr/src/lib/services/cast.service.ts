@@ -29,27 +29,22 @@ export class CastService implements OnInit {
     // Check if the Cast SDK is already initialized
     if (this.isInitialized) return;
 
-    // Check if the Cast SDK is available and initialized
-		if (this.isSdkAvailable()) {
-      console.log('Initializing Cast API...');
+    console.log('Initializing Cast API...');
 
-      // Initialize the Cast SDK
-      cast.framework.CastContext.getInstance().setOptions({
-        receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
-        autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
-      });
-  
-      // Store the CastContext object
-      this.castContext = cast.framework.CastContext.getInstance();
-      
-      // Initializing Remote Player
-      this.player = new cast.framework.RemotePlayer();
-      this.playerController = new cast.framework.RemotePlayerController(this.player);
-      
-      this.isInitialized = true;
-		} else {
-			console.log('Cast SDK is not available or not initialized.');
-		}
+    // Initialize the Cast SDK
+    cast.framework.CastContext.getInstance().setOptions({
+      receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+      autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+    });
+
+    // Store the CastContext object
+    this.castContext = cast.framework.CastContext.getInstance();
+    
+    // Initializing Remote Player
+    this.player = new cast.framework.RemotePlayer();
+    this.playerController = new cast.framework.RemotePlayerController(this.player);
+    
+    this.isInitialized = true;
   }
   
   // Cast Media to receiver

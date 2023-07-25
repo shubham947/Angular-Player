@@ -406,17 +406,22 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 
 	// Initialize Cast and requestSession
 	castToChromecast() {
-		// Initialize Cast API
-		this._castService.initializeCastApi();
-
-		// Get the CastContext and show the Cast dialog to the user
-		let castContext = this._castService.getCastContext();
-		// Starts media casting after session starts
-		castContext.requestSession().then((session: any)=> {
-			this._castService.loadMedia(this.media.src, 'video/mp4');
-		}).catch((err: any)=> {
-			console.error(err);
-		});
+		// Check if the Cast SDK is available and initialized
+		if (this._castService.isSdkAvailable()) {
+			// Initialize Cast API
+			this._castService.initializeCastApi();
+	
+			// Get the CastContext and show the Cast dialog to the user
+			let castContext = this._castService.getCastContext();
+			// Starts media casting after session starts
+			castContext.requestSession().then((session: any)=> {
+				this._castService.loadMedia(this.media.src, 'video/mp4');
+			}).catch((err: any)=> {
+				console.error(err);
+			});
+		} else {
+			console.log('Cast SDK is not available or not initialized.');
+		}
 	}
 
 	// Stop casting or just stop session
