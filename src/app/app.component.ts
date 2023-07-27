@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Media, MediaType } from 'ng-plyr';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Media, MediaType, PlayerService } from 'ng-plyr';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +45,8 @@ export class AppComponent implements OnInit {
   ];
   videoSrc = "https://joy.videvo.net/videvo_files/video/free/2021-04/large_watermarked/210329_06B_Bali_1080p_013_preview.mp4";
 
-  constructor() {}
+  constructor(private _fb:FormBuilder,
+              private _plyr:PlayerService) {}
   
   ngOnInit(): void {
     // this.nextMedia = new Media(this.videoList[1], MediaType.VIDEO);
@@ -61,10 +63,20 @@ export class AppComponent implements OnInit {
     });
   }
 
+  playFromURLForm = this._fb.group({
+    url: ['', Validators.required]
+  });
+
   track = 0;
   onEnd(ended:boolean) {
     // this.videoSrc = this.videoList[(this.track++) % this.videoList.length];
     // this.nextMedia = new Media(this.videoList[(this.track) % this.videoList.length], MediaType.VIDEO);
+  }
+  
+  playURL() {
+    let media = new Media(this.playFromURLForm.controls.url.value!);
+    this._plyr.playNext([media]);
+    this._plyr.next();
   }
   
 }

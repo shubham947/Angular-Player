@@ -1,3 +1,14 @@
 <ng-plyr [src]="videoSrc" [volume]="vol" [autoplay]="true"
  [playlist]="mediaItems" [loopPlaylist]="true"
  (ended)="onEnd($event)"></ng-plyr>
+
+<div class="form">
+    <form [formGroup]="playFromURLForm">
+        <mat-form-field appearance="fill">
+            <mat-label>Enter video url to play</mat-label>
+            <input matInput placeholder="e.g. http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" formControlName="url" required>
+            <mat-error *ngIf="playFromURLForm.controls.url.invalid">Please enter a valid url</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" [disabled]="playFromURLForm.invalid" (click)="playURL()">Play URL</button>
+    </form>
+</div>
