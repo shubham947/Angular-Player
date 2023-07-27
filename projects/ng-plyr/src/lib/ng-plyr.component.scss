@@ -361,13 +361,32 @@
     }
 }
 
-// For screens smaller than 768px wide
-@media only screen and (max-width: 768px) {
-    .controls {
-        .play-next-btn,
-        .volume-slider,
-        .right-side-btns > .loop-btn {
+// For screens smaller than 425px wide
+@media only screen and (max-width: 425px) {
+    .video-container {
+        &:hover .video-header-container,
+        &:focus-within .video-header-container,
+        &.paused .video-header-container,
+        .video-header-container {
             display: none;
+        }
+        .video-controls-container .controls {
+            .play-next-btn,
+            .volume-container,
+            .right-side-btns > .loop-btn {
+                display: none;
+            }
+            .right-side-btns {
+                & > button {
+                    width: 3rem;
+                    & > svg, .settings-icon {
+                        height: 1.5rem;
+                    }
+                }
+            }
+            svg {
+                height: 1.5rem;
+            }
         }
     }
 }
