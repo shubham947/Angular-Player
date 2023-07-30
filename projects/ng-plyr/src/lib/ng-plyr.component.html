@@ -27,9 +27,17 @@
                 </svg>
             </button>
             <button stopClickPropagation class="play-btn" (click)="togglePlay()">
-                <svg class="play-icon" viewBox="0 0 24 24">
+                <svg class="play-icon" viewBox="0 0 24 24" *ngIf="!isCasting">
                     <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
                 </svg>
+                <span *ngIf="isCasting">
+                    <svg viewBox="0 -960 960 960" title="Playing on TV" *ngIf="isPlaying">
+                        <path fill="currentColor" d="M200-320h80q0-33-23.5-56.5T200-400v80Zm142 0h58q0-83-58.5-141.5T200-520v58q59 0 100.5 41.5T342-320Zm120 0h58q0-66-25-124.5t-68.5-102Q383-590 324.5-615T200-640v58q109 0 185.5 76.5T462-320ZM320-120v-80H160q-33 0-56.5-23.5T80-280v-480q0-33 23.5-56.5T160-840h640q33 0 56.5 23.5T880-760v480q0 33-23.5 56.5T800-200H640v80H320ZM160-280h640v-480H160v480Zm0 0v-480 480Z"/>
+                    </svg>
+                    <svg class="cast-pause-icon" viewBox="0 -960 960 960" title="Casting paused" *ngIf="!isPlaying">
+                        <path fill="currentColor" d="M750-640h40v-160h-40v160Zm-100 0h40v-160h-40v160ZM480-480ZM80-280q50 0 85 35t35 85H80v-120Zm0-160q117 0 198.5 81.5T360-160h-80q0-83-58.5-141.5T80-360v-80Zm0-160q91 0 171 34.5T391-471q60 60 94.5 140T520-160h-80q0-75-28.5-140.5t-77-114q-48.5-48.5-114-77T80-520v-80Zm720 440H600q0-20-1.5-40t-4.5-40h206v-212q22-7 42-16.5t38-22.5v251q0 33-23.5 56.5T800-160ZM80-680v-40q0-33 23.5-56.5T160-800h292q-6 19-9 39t-3 41H160v46q-20-3-40-4.5T80-680Zm640 160q-83 0-141.5-58.5T520-720q0-83 58.5-141.5T720-920q83 0 141.5 58.5T920-720q0 83-58.5 141.5T720-520Z"/>
+                    </svg>
+                </span>
             </button>
             <button stopClickPropagation class="play-next-btn" title="Next" (click)="playNextMedia()" [disabled]="!nextMedia">
                 <svg class="play-next-icon" fill="currentColor" viewBox="0 0 24 24">
@@ -159,12 +167,12 @@
                         <path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zm-10-7h9v6h-9z" />
                     </svg>
                 </button>
-                <button class="cast-screen-btn" [title]="checkCastingStatus() ? 'Stop casting' : 'Cast to screen'"
-                    (click)="checkCastingStatus() ? endCurrentSession(true) : castToChromecast()">
-                    <svg class="" viewBox="0 -960 960 960" *ngIf="!checkCastingStatus()">
+                <button class="cast-screen-btn" [title]="isCasting ? 'Stop casting' : 'Cast to screen'"
+                    (click)="isCasting ? endCurrentSession(true) : castToChromecast()">
+                    <svg class="" viewBox="0 -960 960 960" *ngIf="!isCasting">
                         <path fill="currentColor" d="M480-480Zm320 320H600q0-20-1.5-40t-4.5-40h206v-480H160v46q-20-3-40-4.5T80-680v-40q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160Zm-720 0v-120q50 0 85 35t35 85H80Zm200 0q0-83-58.5-141.5T80-360v-80q117 0 198.5 81.5T360-160h-80Zm160 0q0-75-28.5-140.5t-77-114q-48.5-48.5-114-77T80-520v-80q91 0 171 34.5T391-471q60 60 94.5 140T520-160h-80Z"/>
                     </svg>
-                    <svg class="" viewBox="0 -960 960 960" *ngIf="checkCastingStatus()">
+                    <svg class="" viewBox="0 -960 960 960" *ngIf="isCasting">
                         <path fill="currentColor" d="M720-320H575q-35-109-111.5-192T281-640h439v320ZM80-160v-120q50 0 85 35t35 85H80Zm200 0q0-83-58.5-141.5T80-360v-80q117 0 198.5 81.5T360-160h-80Zm160 0q0-75-28.5-140.5t-77-114q-48.5-48.5-114-77T80-520v-80q91 0 171 34.5T391-471q60 60 94.5 140T520-160h-80Zm360 0H600q0-20-1.5-40t-4.5-40h206v-480H160v46q-20-3-40-4.5T80-680v-40q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160Z"/>
                     </svg>
                 </button>

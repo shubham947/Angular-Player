@@ -103,6 +103,7 @@ And assign value to mediaUrl in component.ts
 - [x] Button for looping
 - [x] Show media title
 - [x] Cast to other devices
+- [x] While casting local player acts as remote
 - [ ] Playing audio
 - [ ] Switch for autoplay
 

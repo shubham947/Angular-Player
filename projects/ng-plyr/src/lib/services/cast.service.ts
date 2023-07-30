@@ -1,5 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
-import { SafeUrl } from '@angular/platform-browser';
+import { Injectable } from '@angular/core';
 
 declare const cast: any;
 declare const chrome: any;
@@ -7,7 +6,7 @@ declare const chrome: any;
 @Injectable({
   providedIn: 'root'
 })
-export class CastService implements OnInit {
+export class CastService {
   private isInitialized = false;
   private castContext: any;
   private currentSession: any;
@@ -16,10 +15,6 @@ export class CastService implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    this.initializeCastApi();
-    this.listenToPlayerEvents();
-  }
   
   isSdkAvailable(): boolean {
     return !!cast?.framework;
@@ -48,8 +43,7 @@ export class CastService implements OnInit {
   }
   
   // Cast Media to receiver
-  loadMedia(mediaURL?:string | SafeUrl, contentType:string = 'video/mp4') {
-    if (!this.currentSession) return;
+  loadMedia(mediaURL?:string, contentType:string = 'video/mp4') {
     if (!mediaURL) {
       this.currentSession.endSession(false);
     }
@@ -63,7 +57,7 @@ export class CastService implements OnInit {
       this.currentSession.loadMedia(request).then(
         function() { console.log('Media load succeed'); },
       ).catch((error: string)=> {
-        console.log('Error in casting media: ' + error);
+        console.error('Error in casting media: ' + error);
       });
     } else {
       console.log('Session ended or not present.');
@@ -85,14 +79,27 @@ export class CastService implements OnInit {
   // Stop casting or just stop session
   endCurrentSession(stopCasting: boolean) {
     this.currentSession?.endSession(stopCasting);
+    this.stopListeningRemotePlayerEvents();
   }
 
 	// Remote Player controls
-	playOrPauseCasting() {
+	private playOrPauseCasting() {
 		if (this.currentSession && !this.player.isPlayingBreak) {
 			this.playerController.playOrPause();
 		}
 	}
+
+  play() {
+    if (this.player?.isPaused) {
+      this.playOrPauseCasting();
+    }
+  }
+
+  pause() {
+    if (!this.player?.isPaused) {
+      this.playOrPauseCasting();
+    }
+  }
 	
 	stopCasting() {
     if (this.currentSession) {
@@ -108,9 +115,21 @@ export class CastService implements OnInit {
     }
   }
   
-  muteOrUnmute() {
+  private muteOrUnmute() {
     if (this.currentSession) {
       this.playerController.muteOrUnmute();
+    }
+  }
+  
+  mute() {
+    if (!this.player?.isMuted) {
+      this.muteOrUnmute();
+    }
+  }
+  
+  unmute() {
+    if (this.player?.isMuted) {
+      this.muteOrUnmute();
     }
   }
   
@@ -129,14 +148,27 @@ export class CastService implements OnInit {
     }
   }
 
-  // To-Do: Listening to remote events
-  listenToPlayerEvents() {
-    this.playerController.addEventListener(
-      cast.framework.RemotePlayerEventType.IS_CONNECTED_CHANGED, ()=> {
-      if (!this.player.isConnected) {
-        console.log('RemotePlayerController: Player disconnected', this.isCasting());
-        // Update local player to disconnected state
-      }
+  // Create RemotePlayer events
+  onCastEvent(eventName:string, cb:Function) {
+    return new Promise((resolve, reject)=> {
+      this.playerController.addEventListener(cast.framework.RemotePlayerEventType[eventName], ()=> {
+        try {
+          cb();
+        } catch (error) {
+          reject(error);
+        }
+      });
+      resolve('Added event listener on ' + eventName);
     });
+  }
+
+  // Stop all event listeners on playerController
+  stopListeningRemotePlayerEvents() {
+    console.info('Stop listening to events');
+    this.playerController.removeEventListener(cast.framework.RemotePlayerEventType.IS_PAUSED_CHANGED, ()=> {});
+    this.playerController.removeEventListener(cast.framework.RemotePlayerEventType.IS_PLAYING_BREAK_CHANGED, ()=> {});
+    this.playerController.removeEventListener(cast.framework.RemotePlayerEventType.CURRENT_TIME_CHANGED, ()=> {});
+    this.playerController.removeEventListener(cast.framework.RemotePlayerEventType.VOLUME_LEVEL_CHANGED, ()=> {});
+    this.playerController.removeEventListener(cast.framework.RemotePlayerEventType.IS_MUTED_CHANGED, ()=> {});
   }
 }

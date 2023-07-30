@@ -77,6 +77,7 @@ export class AppComponent implements OnInit {
     let media = new Media(this.playFromURLForm.controls.url.value!);
     this._plyr.playNext([media]);
     this._plyr.next();
+    this.playFromURLForm.reset();
   }
   
 }
