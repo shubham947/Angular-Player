@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "dev": "npm link ng-plyr && ng serve --ssl true --ssl-cert localhost.pem --ssl-key localhost-key.pem",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -22,7 +23,7 @@
     "@angular/router": "^14.1.2",
     "@angular/service-worker": "^14.1.0",
     "firebase": "^10.1.0",
-    "ng-plyr": "^0.4.0",
+    "ng-plyr": "^0.5.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

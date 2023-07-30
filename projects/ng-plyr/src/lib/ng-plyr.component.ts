@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, OnInit, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, OnInit, OnDestroy, Output, SimpleChanges, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Media, MediaType } from './models/media.model';
 import { Playlist, PlaylistItem } from './models/playlist.model';
 import { PlayerService } from './services/ng-plyr.service';
@@ -16,6 +16,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	isMuted = false;
 	isFullscreen = false;
 	isPIP = false;
+	isCasting = false;
 	// isAutoplayEnabled = false;
 	isLoopingEnabled = false;
 	isControlSettingsOpen = false;
@@ -70,7 +71,8 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 
 	constructor(@Inject(DOCUMENT) private document: any,
 				private _plyrService:PlayerService,
-				private _castService:CastService) { }
+				private _castService:CastService,
+				private _cd: ChangeDetectorRef) { }
 
 	// Lifecycle hooks
 	// OnChanges LC hook
@@ -149,15 +151,14 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 		this.paused.emit(false);
 		this.isPlaying = true;
 		this.media.paused = false;
-		this._castService.playOrPauseCasting();
+		if(this.isCasting) this.video.nativeElement.pause();
 	}
 
 	onPause(event:Event) {
 		this.playing.emit(false);
 		this.paused.emit(true);
-		this.isPlaying = false;
 		this.media.paused = true;
-		this._castService.playOrPauseCasting();
+		if(!this.isCasting) this.isPlaying = false;
 	}
 
 	onEnd(event:Event) {
@@ -221,11 +222,15 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 		value = Number(value).toPrecision(2);
 		if (!this.video || value > 1 || value < 0) return;
 
-		this.video.nativeElement.volume = value;
-		this.playerVolume = value;
-		this._castService.setVolumeLevel(value);
-		if (this.video.nativeElement.muted && value > 0) {
-			this.toggleMute();
+		if (this.isCasting) {
+			// Not yet working
+			this._castService.setVolumeLevel(value);
+		} else {
+			this.video.nativeElement.volume = value;
+			this.playerVolume = value;
+			if (this.video.nativeElement.muted && value > 0) {
+				this.toggleMute();
+			}
 		}
 	}
 
@@ -415,13 +420,27 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 			let castContext = this._castService.getCastContext();
 			// Starts media casting after session starts
 			castContext.requestSession().then((session: any)=> {
+				// Add event listeners
+				this.listenToPlayerEvents();
+				this.enableCastingMode();
+				// load media in receiver
 				this._castService.loadMedia(this.media.src, 'video/mp4');
 			}).catch((err: any)=> {
 				console.error(err);
 			});
 		} else {
-			console.log('Cast SDK is not available or not initialized.');
+			console.warn('Cast SDK is not available or not initialized.');
 		}
+	}
+
+	// After successful connection, use this method to change mode to casting
+	enableCastingMode() {
+		this.isCasting = true;
+		// Stop playing on local device
+		this.video.nativeElement.pause();
+		this.isMuted = this._castService.player.isMuted;
+		this.isPlaying = !this._castService.player.isPaused;
+		this.playerVolume = this._castService.player.volumeLevel.toPrecision(2);
 	}
 
 	// Stop casting or just stop session
@@ -429,9 +448,84 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 		this._castService.endCurrentSession(stopCasting);
 	}
 
-	// Whether isCasting
-	checkCastingStatus(): boolean {
-		return this._castService.isCasting();
+	// Listening to remote events
+	listenToPlayerEvents() {
+		// Storing local player states in local variables to restore after receiver disconnects
+		let isMutedLocal = this.isMuted;
+		let playerVolumeLocal = this.playerVolume;
+
+		// Cast Connected/disconnected
+		this._castService.onCastEvent('IS_CONNECTED_CHANGED', () => {
+			if (this._castService.player.isConnected) {
+				console.log('Cast Player connected');
+				// Stop playing on local device
+				this.enableCastingMode();
+			} else {
+				console.log('Cast Player disconnected');
+				this.isCasting = false;
+				this._castService.stopListeningRemotePlayerEvents();
+				// Start playing on local device
+				this.seekTo(this._castService.player.currentTime);
+				this.isPlaying ? this.video.nativeElement.play() : this.video.nativeElement.pause();
+				// Setting local UI to original state
+				this.isMuted = isMutedLocal;
+				this.playerVolume = playerVolumeLocal;
+			}
+		}).then((res: any) => console.log(res))
+		.catch((err: any) => console.error(err));
+
+		// Pause/Play
+		this._castService.onCastEvent('IS_PAUSED_CHANGED', () => {
+			if (this._castService.player.isPaused) {
+				console.log('Receiver paused');
+				this.isPlaying = false;
+			} else {
+				console.log('Receiver playing');
+				this.isPlaying = true;
+			}
+		}).then((res: any) => console.log(res))
+		.catch((err: any) => console.error(err));
+
+		// Paying break
+		this._castService.onCastEvent('IS_PLAYING_BREAK_CHANGED', () => {
+			if (this._castService.player.isPlayingBreak) {
+				console.log('Player is playing break');
+				// Change on local device
+				this.video.nativeElement.pause();
+				// Show Playing break, in UI
+			} else {
+				console.log('Player break ended');
+				// Change on local device
+			}
+		}).then((res: any) => console.log(res))
+		.catch((err: any) => console.error(err));
+
+		// currentTime changed
+		this._castService.onCastEvent('CURRENT_TIME_CHANGED', () => {
+			// Change current time on local device
+			let currentTime = this._castService.player.currentTime;
+			this.progressPercent = Number((currentTime / this.video.nativeElement.duration).toPrecision(3)) * 100;
+			this.currentTime = this.formatDuration(currentTime);
+			// Update in UI on currentTime changes
+			this._cd.detectChanges();
+		}).then((res: any) => console.log(res))
+		.catch((err: any) => console.error(err));
+
+		// volumeLevel changed
+		this._castService.onCastEvent('VOLUME_LEVEL_CHANGED', () => {
+			// Change volume level in UI
+			this.playerVolume = this._castService.player.volumeLevel.toPrecision(2);
+			// Update in UI on volume changes
+			this._cd.detectChanges();
+		}).then((res: any) => console.log(res))
+		.catch((err: any) => console.error(err));
+
+		// Muted/unmuted
+		this._castService.onCastEvent('IS_MUTED_CHANGED', () => {
+			// Change mute icon in UI
+			this.isMuted = this._castService.player.isMuted;
+		}).then((res: any) => console.log(res))
+		.catch((err: any) => console.error(err));
 	}
 
 	// To Do: Implement with a backend server
@@ -461,16 +555,25 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	}
 
 	togglePlay() {
-		if (this.video.nativeElement.currentTime === this.video.nativeElement.duration) {
-			this.video.nativeElement.currentTime = 0;
+		if (!this.isCasting) {
+			if (this.video.nativeElement.currentTime === this.video.nativeElement.duration) {
+				this.video.nativeElement.currentTime = 0;
+			}
+			this.video.nativeElement.paused ? this.video.nativeElement.play() : this.video.nativeElement.pause();
+		} else {
+			// Play/pause receiver
+			this.isPlaying  ? this._castService.pause() : this._castService.play();
 		}
-		this.video.nativeElement.paused ? this.video.nativeElement.play() : this.video.nativeElement.pause();
 	}
 
 	toggleMute() {
-		this.video.nativeElement.muted = !this.video.nativeElement.muted;
-		this.isMuted = this.video.nativeElement.muted;
-		this._castService.muteOrUnmute();
+		if (!this.isCasting) {
+			this.video.nativeElement.muted = !this.video.nativeElement.muted;
+			this.isMuted = this.video.nativeElement.muted;
+		} else {
+			// mute/unmute receiver
+			this.isMuted ? this._castService.unmute() : this._castService.mute();
+		}
 	}
 
 	togglePIP() {

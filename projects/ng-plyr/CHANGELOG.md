@@ -1,3 +1,11 @@
+## v0.5.0 (30 Jul 2023)
+- Fixed bugs: Media not playing after casting device was connected
+### Features
+- [x] Local player becomes remote when casting media
+### Known issues:
+- While casting, next media is not playing automatically, and current one ends
+- Volume of cast receiver not changing from local player UI
+
 ## v0.3.0 (25 Jul 2023)
 Updated UI
 ### Features
