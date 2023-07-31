@@ -55,7 +55,9 @@ export class CastService {
     
     if (this.currentSession) {
       this.currentSession.loadMedia(request).then(
-        function() { console.log('Media load succeed'); },
+        ()=> {
+          console.log('Media load succeed');
+        },
       ).catch((error: string)=> {
         console.error('Error in casting media: ' + error);
       });
@@ -164,7 +166,7 @@ export class CastService {
 
   // Stop all event listeners on playerController
   stopListeningRemotePlayerEvents() {
-    console.info('Stop listening to events');
+    console.info('Stopped listening to cast events');
     this.playerController.removeEventListener(cast.framework.RemotePlayerEventType.IS_PAUSED_CHANGED, ()=> {});
     this.playerController.removeEventListener(cast.framework.RemotePlayerEventType.IS_PLAYING_BREAK_CHANGED, ()=> {});
     this.playerController.removeEventListener(cast.framework.RemotePlayerEventType.CURRENT_TIME_CHANGED, ()=> {});
