@@ -120,7 +120,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 
 	changeMedia(media?:Media) {
 		this.media = media ? media : new Media(this.mediaURL, this.mediaType);
-		this._castService.loadMedia(media?.src);
+		if(this.isCasting) this._castService.loadMedia(media?.src);
 		this.resetPlayer();
 	}
 
@@ -161,7 +161,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 		if(!this.isCasting) this.isPlaying = false;
 	}
 
-	onEnd(event:Event) {
+	onEnd(event?:Event) {
 		this.ended.emit(true);
 		if (this.isAutoplayEnabled) {
 			this.playNextMedia();
@@ -482,6 +482,16 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 			} else {
 				console.log('Receiver playing');
 				this.isPlaying = true;
+			}
+		}).then((res: any) => console.log(res))
+		.catch((err: any) => console.error(err));
+
+		// MediaInfo changes
+		this._castService.onCastEvent('PLAYER_STATE_CHANGED', () => {
+			// console.log('PlayerState:', this._castService.player.playerState);
+			if (this._castService.player.playerState === 'IDLE' && this.media) {
+				this.onEnd();
+				this._castService.play();
 			}
 		}).then((res: any) => console.log(res))
 		.catch((err: any) => console.error(err));
