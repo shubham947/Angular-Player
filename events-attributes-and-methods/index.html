@@ -9,24 +9,24 @@
     <meta name="generator" content="Retype 3.1.0">
 
     <!-- Primary Meta Tags -->
-    <title>Shortcuts</title>
-    <meta name="title" content="Shortcuts">
-    <meta name="description" content="Introducing shortcuts - the secret to unlocking rapid control over your ng-plyr video playback! With ng-plyr's intuitive shortcuts, you can...">
+    <title>Events, attributes and Methods</title>
+    <meta name="title" content="Events, attributes and Methods">
+    <meta name="description" content="Hey there, fellow developer! Brace yourself as we dive into the world of ng-plyr events and attributes that will level up your video player game in...">
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://ng-plyr.web.app/shortcuts/">
+    <link rel="canonical" href="https://ng-plyr.web.app/events-attributes-and-methods/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ng-plyr.web.app/shortcuts/">
-    <meta property="og:title" content="Shortcuts">
-    <meta property="og:description" content="Introducing shortcuts - the secret to unlocking rapid control over your ng-plyr video playback! With ng-plyr's intuitive shortcuts, you can...">
+    <meta property="og:url" content="https://ng-plyr.web.app/events-attributes-and-methods/">
+    <meta property="og:title" content="Events, attributes and Methods">
+    <meta property="og:description" content="Hey there, fellow developer! Brace yourself as we dive into the world of ng-plyr events and attributes that will level up your video player game in...">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://ng-plyr.web.app/shortcuts/">
-    <meta property="twitter:title" content="Shortcuts">
-    <meta property="twitter:description" content="Introducing shortcuts - the secret to unlocking rapid control over your ng-plyr video playback! With ng-plyr's intuitive shortcuts, you can...">
+    <meta property="twitter:url" content="https://ng-plyr.web.app/events-attributes-and-methods/">
+    <meta property="twitter:title" content="Events, attributes and Methods">
+    <meta property="twitter:description" content="Hey there, fellow developer! Brace yourself as we dive into the world of ng-plyr events and attributes that will level up your video player game in...">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
@@ -222,112 +222,349 @@
                                 <div id="docs-sidebar-right-toggle"></div>
                 
                                 <!-- Page content  -->
-<doc-anchor-target id="shortcuts" class="break-words">
+<doc-anchor-target id="events-attributes-and-methods" class="break-words">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#shortcuts">#</doc-anchor-trigger>
-        <span>Shortcuts</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#events-attributes-and-methods">#</doc-anchor-trigger>
+        <span>Events, attributes and Methods</span>
     </h1>
 </doc-anchor-target>
-<doc-anchor-target id="master-ng-plyr-playback-with-handy-shortcuts">
+<doc-anchor-target id="unleash-the-power-of-events-and-attributes">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#unleash-the-power-of-events-and-attributes">#</doc-anchor-trigger>
+        <span>Unleash the Power of Events and Attributes!</span>
+    </h2>
+</doc-anchor-target>
+<p>Hey there, fellow developer! Brace yourself as we dive into the world of ng-plyr events and attributes that will level up your video player game in Angular!</p>
+<doc-anchor-target id="input-attributes">
     <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#master-ng-plyr-playback-with-handy-shortcuts">#</doc-anchor-trigger>
-        <span><span class="docs-emoji">&#x1F3AF;</span> Master ng-plyr Playback with Handy Shortcuts! <span class="docs-emoji">&#x1F3AF;</span></span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#input-attributes">#</doc-anchor-trigger>
+        <span><span class="docs-emoji">&#x1F3AC;</span> Input Attributes <span class="docs-emoji">&#x1F3AC;</span></span>
     </h3>
 </doc-anchor-target>
-<p><strong>Introducing shortcuts - the secret to unlocking rapid control over your ng-plyr video playback! With ng-plyr&#x27;s intuitive shortcuts, you can effortlessly navigate through your media like a seasoned video virtuoso.</strong></p>
-<p><span class="docs-emoji">&#x1F4FC;</span> <strong>Play and Pause</strong>: Tap the <strong>spacebar</strong> or &#x27;<strong>k</strong>&#x27; key to play and pause your media with ease. Embrace the rhythm of your content and pause at just the right moments.</p>
-<p><span class="docs-emoji">&#x23E9;</span> <strong>Fast Forward and Rewind</strong>: Seek forward or backward by 5 seconds with the <strong>left/right arrow</strong> keys. Never miss a beat and stay in perfect sync with your video.</p>
-<p><span class="docs-emoji">&#x1F507;</span> <strong>Mute and Unmute</strong>: Silence or restore sound with a quick &#x27;<strong>m</strong>&#x27; keystroke. Mute distractions or amplify the audio brilliance as per your command.</p>
-<p><span class="docs-emoji">&#x1F509;</span><span class="docs-emoji">&#x1F50A;</span> <strong>Volume Control</strong>: Fine-tune the volume using the <strong>up/down arrow</strong> keys. Increase or decrease the volume to match your preferred audio levels.</p>
-<p><span class="docs-emoji">&#x23ED;&#xFE0F;</span><span class="docs-emoji">&#x23EE;&#xFE0F;</span> <strong>Next and Previous Media</strong>: Easily switch to the next or previous media in your playlist using the &#x27;<strong>Shift + N</strong>&#x27; and &#x27;<strong>Shift + P</strong>&#x27; keys. Seamlessly transition from one video to the next.</p>
-<p><span class="docs-emoji">&#x1F4E2;</span> <strong>Toggle Fullscreen</strong>: Embrace a cinematic experience by toggling fullscreen with the &#x27;<strong>f</strong>&#x27; key. Immerse yourself and your audience in captivating visuals.</p>
-<p>Ready to take control of your ng-plyr player like never before? Embrace the efficiency and convenience of shortcuts to orchestrate your media playback seamlessly.</p>
-<doc-anchor-target id="keyboard-shortcuts">
+<p>The <code v-pre>&lt;ng-plyr&gt;</code> tag offers an array of input attributes, giving you the flexibility to fine-tune your media playback experience:</p>
+<ul>
+<li><strong>src</strong>: Provide the URL of the media source to display your video or audio content.</li>
+<li><strong>loadingImgSrc</strong>: Set a custom loading image to charm your users while the media loads.</li>
+<li><strong>playFrom</strong>: Start playing your media from a specific second to get the perfect playback.</li>
+<li><strong>volume</strong>: Control the volume level and set it just right for your users.</li>
+<li><strong>loop</strong>: Enable or disable looping so that the media plays from the beginning or stops at the end.</li>
+<li><strong>bookmarks</strong>: Highlight specific seconds within the media&#x27;s duration for easy navigation.</li>
+<li><strong>autoplay</strong>: Decide whether your media starts playing automatically or waits for a user command.</li>
+<li><strong>nextMedia</strong>: Define the media that should play next, making your playlist even more engaging.</li>
+<li><strong>playlist</strong>: Pass an entire playlist to delight your users with continuous playback.</li>
+<li><strong>loopPlaylist</strong>: Turn on the playlist loop to keep the fun going endlessly.</li>
+</ul>
+<doc-anchor-target id="output-events">
     <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#keyboard-shortcuts">#</doc-anchor-trigger>
-        <span>Keyboard Shortcuts</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#output-events">#</doc-anchor-trigger>
+        <span><span class="docs-emoji">&#x1F389;</span> Output Events <span class="docs-emoji">&#x1F389;</span></span>
+    </h3>
+</doc-anchor-target>
+<p>Get ready for the excitement of ng-plyr&#x27;s output events, providing you with valuable information about your media playback:</p>
+<ul>
+<li><strong>playing</strong>: Celebrate as the media starts to play, giving life to your content.</li>
+<li><strong>paused</strong>: Pause for applause when the media takes a break.</li>
+<li><strong>ended</strong>: Cue the applause again when the media ends its show.</li>
+<li><strong>onnext</strong>: Stay ahead by knowing which media is set to play next in your playlist.</li>
+<li><strong>onprev</strong>: Rewind and take a bow as the previous media steps into the spotlight.</li>
+<li><strong>fullscreen</strong>: Feel the magic of entering or exiting fullscreen mode.</li>
+<li><strong>volumechange</strong>: Watch the volume level change or mute/unmute with your commands.</li>
+</ul>
+<doc-anchor-target id="upcoming-inputs-and-output-events">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#upcoming-inputs-and-output-events">#</doc-anchor-trigger>
+        <span><span class="docs-emoji">&#x1F680;</span> Upcoming Inputs and Output Events <span class="docs-emoji">&#x1F680;</span></span>
+    </h3>
+</doc-anchor-target>
+<p>We&#x27;re always upgrading ng-plyr to offer you more exciting features! Keep an eye out for these upcoming additions:</p>
+<ul>
+<li><strong>type</strong>: Specify the media type to enhance playback versatility.</li>
+<li><strong>captions</strong>: Enrich your media experience with captions in different languages.</li>
+</ul>
+<p>The excitement doesn&#x27;t stop there! Be prepared for the error event, which will provide you with vital details about any errors that might occur.</p>
+<doc-anchor-target id="methods---your-arsenal-of-control">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#methods---your-arsenal-of-control">#</doc-anchor-trigger>
+        <span>Methods - Your Arsenal of Control!</span>
+    </h3>
+</doc-anchor-target>
+<p>Feel like a video playback maestro with ng-plyr&#x27;s arsenal of powerful methods at your disposal:</p>
+<ul>
+<li><strong>play()</strong>: Conquer the play button to start your media&#x27;s performance.</li>
+<li><strong>pause()</strong>: The pause button bows to your command, giving your media a break.</li>
+<li><strong>next()</strong>: Seamlessly transition to the next media in your playlist.</li>
+<li><strong>prev()</strong>: Rewind and replay the previous media to keep your audience entertained.</li>
+<li><strong>enableMediaLooping(loop?:boolean)</strong>: Take control of media looping, setting it to your preferred state (default: true).</li>
+<li><strong>enablePlaylistLooping(loop?:boolean)</strong>: Extend the excitement with playlist looping (default: true).</li>
+<li><strong>changeVolume(level:number)</strong>: Master the volume knob and set the perfect level (range: 0 to 1).</li>
+<li><strong>seekTo(atSecond:number)</strong>: Seamlessly seek the media to a specific second to nail the perfect moment.</li>
+<li><strong>setPlaybackSpeed(rate:number)</strong>: Tune your media playback speed within the range of 0.25 to 2.</li>
+<li><strong>getCurrentlyPlaying()</strong>: Discover which media is currently captivating your audience.</li>
+<li><strong>getNextMedia()</strong>: Stay one step ahead by knowing what&#x27;s coming up next in your playlist.</li>
+<li><strong>getNumOfMediaInPlaylist()</strong>: Count the number of media items in your playlist.</li>
+<li><strong>addToPlaylist(mediaItems:Media[], atStart?:boolean)</strong>: Expand your playlist with media items at the end or start.</li>
+<li><strong>playNext(media:Media[])</strong>: Seamlessly add media to your playlist after the current media&#x27;s performance.</li>
+</ul>
+<p>So, are you ready to unleash the potential of ng-plyr and take your video player experience to new heights? Dive into the world of ng-plyr, and let the magic of seamless media playback begin! <span class="docs-emoji">&#x1F680;</span></p>
+<doc-anchor-target id="some-tables-for-all-the-geeky-developers">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#some-tables-for-all-the-geeky-developers">#</doc-anchor-trigger>
+        <span>Some tables for all the geeky developers</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="events-and-attributes">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#events-and-attributes">#</doc-anchor-trigger>
+        <span>Events and Attributes</span>
+    </h3>
+</doc-anchor-target>
+<p>You can pass the following as attributes to <code v-pre>&lt;ng-plyr&gt;</code> tag.</p>
+<doc-anchor-target id="input-attributes">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#input-attributes">#</doc-anchor-trigger>
+        <span>Input attributes</span>
+    </h4>
+</doc-anchor-target>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Input</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code v-pre>src</code></td>
+<td><code v-pre>string</code></td>
+<td>URL of media source</td>
+</tr>
+<tr>
+<td><code v-pre>loadingImgSrc</code></td>
+<td><code v-pre>string</code></td>
+<td>URL of custom loading image</td>
+</tr>
+<tr>
+<td><code v-pre>playFrom</code></td>
+<td><code v-pre>number</code></td>
+<td>Play media starting from specified second</td>
+</tr>
+<tr>
+<td><code v-pre>volume</code></td>
+<td><code v-pre>number</code></td>
+<td>Keep playing the same media over and over</td>
+</tr>
+<tr>
+<td><code v-pre>loop</code></td>
+<td><code v-pre>boolean</code></td>
+<td>Play media starting from specified second</td>
+</tr>
+<tr>
+<td><code v-pre>bookmarks</code></td>
+<td><code v-pre>number[]</code></td>
+<td>Array of seconds within media max duration</td>
+</tr>
+<tr>
+<td><code v-pre>autoplay</code></td>
+<td><code v-pre>boolean</code></td>
+<td>Enable/disable autoplay</td>
+</tr>
+<tr>
+<td><code v-pre>nextMedia</code></td>
+<td><code v-pre>Media</code></td>
+<td>Media to be played next</td>
+</tr>
+<tr>
+<td><code v-pre>playlist</code></td>
+<td><code v-pre>Media[]</code></td>
+<td>Pass entire playlist to play</td>
+</tr>
+<tr>
+<td><code v-pre>loopPlaylist</code></td>
+<td><code v-pre>boolean</code></td>
+<td>Loop over playlist</td>
+</tr>
+</tbody>
+</table>
+</div>
+<doc-anchor-target id="output-events">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#output-events">#</doc-anchor-trigger>
+        <span>Output events</span>
+    </h4>
+</doc-anchor-target>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Output</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code v-pre>playing</code></td>
+<td><code v-pre>boolean</code></td>
+<td>Media started to play</td>
+</tr>
+<tr>
+<td><code v-pre>paused</code></td>
+<td><code v-pre>boolean</code></td>
+<td>Media paused</td>
+</tr>
+<tr>
+<td><code v-pre>ended</code></td>
+<td><code v-pre>boolean</code></td>
+<td>Media ended</td>
+</tr>
+<tr>
+<td><code v-pre>onnext</code></td>
+<td><code v-pre>Media</code></td>
+<td>Playing next media</td>
+</tr>
+<tr>
+<td><code v-pre>onprev</code></td>
+<td><code v-pre>Media</code></td>
+<td>Playing previous media</td>
+</tr>
+<tr>
+<td><code v-pre>fullscreen</code></td>
+<td><code v-pre>boolean</code></td>
+<td>Media entered/exited fullscreen</td>
+</tr>
+<tr>
+<td><code v-pre>volumechange</code></td>
+<td><code v-pre>{ level:number, muted:boolean }</code></td>
+<td>Volume changed or muted/unmuted</td>
+</tr>
+</tbody>
+</table>
+</div>
+<doc-anchor-target id="upcoming-inputs-and-output-events">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#upcoming-inputs-and-output-events">#</doc-anchor-trigger>
+        <span>Upcoming Inputs and Output events</span>
+    </h4>
+</doc-anchor-target>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Input</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code v-pre>type</code></td>
+<td><code v-pre>MediaType</code></td>
+<td>Specify media type</td>
+</tr>
+<tr>
+<td><code v-pre>captions</code></td>
+<td><code v-pre>[{ path: string, lang: string }]</code></td>
+<td>Add captions to media</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Output</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code v-pre>error</code></td>
+<td><code v-pre>object</code></td>
+<td>Details of any error if occured</td>
+</tr>
+</tbody>
+</table>
+</div>
+<doc-anchor-target id="methods">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#methods">#</doc-anchor-trigger>
+        <span>Methods</span>
     </h3>
 </doc-anchor-target>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>Key</th>
-<th>Function</th>
+<th>Method(arg:type)</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Space bar</td>
-<td>Play/Pause</td>
+<td><code v-pre>play()</code></td>
+<td>Play current media</td>
 </tr>
 <tr>
-<td><code v-pre>m</code></td>
-<td>Mute/Unmute</td>
+<td><code v-pre>pause()</code></td>
+<td>Pause current media</td>
 </tr>
 <tr>
-<td><code v-pre>i</code></td>
-<td>Toggle miniplayer</td>
-</tr>
-<tr>
-<td><code v-pre>f</code></td>
-<td>Toggle fullscreen</td>
-</tr>
-<tr>
-<td><code v-pre>k</code></td>
-<td>Play/Pause</td>
-</tr>
-<tr>
-<td><code v-pre>0</code> or <code v-pre>home</code></td>
-<td>Go to start</td>
-</tr>
-<tr>
-<td><code v-pre>1 to 9</code></td>
-<td>Go to 10% to 90%</td>
-</tr>
-<tr>
-<td><code v-pre>end</code></td>
-<td>Go to end</td>
-</tr>
-<tr>
-<td>Up arrow</td>
-<td>Volume up</td>
-</tr>
-<tr>
-<td>Down arrow</td>
-<td>Volume down</td>
-</tr>
-<tr>
-<td>Left arrow</td>
-<td>Seek back 5 sec</td>
-</tr>
-<tr>
-<td>Right arrow</td>
-<td>Seek ahead 5 sec</td>
-</tr>
-<tr>
-<td><code v-pre>Shift + N</code></td>
+<td><code v-pre>next()</code></td>
 <td>Play next media</td>
 </tr>
 <tr>
-<td><code v-pre>Shift + P</code></td>
+<td><code v-pre>prev()</code></td>
 <td>Play prev media</td>
+</tr>
+<tr>
+<td><code v-pre>enableMediaLooping(loop?:boolean)</code></td>
+<td>Turn on loop for media (default true)</td>
+</tr>
+<tr>
+<td><code v-pre>enablePlaylistLooping(loop?:boolean)</code></td>
+<td>Turn on loop for playlist (default true)</td>
+</tr>
+<tr>
+<td><code v-pre>changeVolume(level:number)</code></td>
+<td>Set volume to level (0 to 1)</td>
+</tr>
+<tr>
+<td><code v-pre>seekTo(atSecond:number)</code></td>
+<td>Seek media to specific second</td>
+</tr>
+<tr>
+<td><code v-pre>setPlaybackSpeed(rate:number)</code></td>
+<td>Set media playback rate (range, .25 to 2)</td>
+</tr>
+<tr>
+<td><code v-pre>getCurrentlyPlaying()</code></td>
+<td>Get currently playing Media</td>
+</tr>
+<tr>
+<td><code v-pre>getNextMedia()</code></td>
+<td>Get nextMedia</td>
+</tr>
+<tr>
+<td><code v-pre>getNumOfMediaInPlaylist()</code></td>
+<td>Get number of media items in playlist</td>
+</tr>
+<tr>
+<td><code v-pre>addToPlaylist(mediaItems:Media[], atStart?:boolean)</code></td>
+<td>Add mediaItems to playlist at end/start</td>
+</tr>
+<tr>
+<td><code v-pre>playNext(media:Media[])</code></td>
+<td>Add media to playlist after current media</td>
 </tr>
 </tbody>
 </table>
 </div>
 
-                                <div class="flex items-center mt-6 mb-6 clear-both">
-                                    <span>
-                                        <a href="../tags/">
-                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
-                                        </a>
-                                        <span class="mr-2"><a href="../tags/shortcuts/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
-                                    <span>shortcuts</span>
-                                </a></span>
-                                    </span>
-                                </div>
-                
+                                
                                 <!-- Required only on API pages -->
                                 <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
                             </div>
@@ -335,20 +572,20 @@
                             
                                 <nav class="flex mt-14">
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../events-attributes-and-methods/">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../features/">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
                                                 <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
-                                                <span class="block mt-1">Events, attributes and Methods</span>
+                                                <span class="block mt-1">Features</span>
                                             </span>
                                         </a>
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../guides/cast-setup/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../shortcuts/">
                                             <span>
                                                 <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
-                                                <span class="block mt-1">Cast</span>
+                                                <span class="block mt-1">Shortcuts</span>
                                             </span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         </a>
@@ -392,6 +629,6 @@
 
     <div id="docs-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Shortcuts", level: 1, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Events, attributes and Methods", level: 1, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false }</script>
 </body>
 </html>
