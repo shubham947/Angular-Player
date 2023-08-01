@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ng-plyr.web.app/sitemap.xml.gz
+Sitemap: https://shubham947.github.io/Angular-Player/sitemap.xml.gz
