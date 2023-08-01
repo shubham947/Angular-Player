@@ -1,10 +1,10 @@
 {
   "name": "ng-plyr",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "An HTML5 media player for developers, built using Angular, having interface similar to Youtube player.",
   "icon": "",
   "license": "MIT",
-  "author": {"name": "Shubham Kumar", "url": "https://github.com/shubham947"},
+  "author": {"name": "Shubham Kumar", "url": "https://shubham947.github.io/Angular-Player"},
   "keywords": ["ng-plyr", "NGP", "plyr", "angular", "ng-player", "local", "video", "media", "youtube", "shortcuts", "player", "video-player"],
   "tags": ["ng-plyr", "NGP", "plyr", "angular", "ng-player", "local", "video", "media", "youtube", "shortcuts", "player", "video-player"],
   "repository": {"type": "git", "url": "https://github.com/shubham947/Angular-Player.git", "directory": "projects/ng-plyr"},

@@ -3,6 +3,22 @@ label: Features
 order: 900
 icon: beaker
 ---
+## Lights, Camera, Action!
+Ready to impress your users with video prowess? ng-plyr has got your back! With its array of features, you're in control:
+
+🎬 **Video Playback Control**: Control your video's destiny with essential actions like play, pause, seek, volume control, and more, all within your reach!
+
+📺 **HTML5 Media Format Support**: ng-plyr embraces all media formats supported by the HTML5 player, ensuring compatibility and a seamless user experience.
+
+🔄 **Loop It Up**: Loop through a single media or your entire playlist to keep the fun going indefinitely!
+
+🔢 **Speed It Up**: Change the playback speed, giving your users the option to watch videos at their desired pace.
+
+📱 **Picture-in-Picture (PIP)**: ng-plyr brings the PIP magic, allowing your users to enjoy videos while multitasking. Productivity has never been this entertaining!
+
+📺 **Chromecast Support**: Elevate the viewing experience by casting videos to Chromecast-enabled devices. And guess what? The local player becomes the remote control for the casted media! How cool is that?
+
+## Feature checklist
 ### For end users
 - [x] Shortcuts available for different buttons
 - [x] Can switch to PIP and Fullscreen

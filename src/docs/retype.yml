@@ -9,6 +9,10 @@ links:
 - text: Intro
   link: /README.md
   icon: home
+- text: Repo
+  link: https://github.com/shubham947/Angular-Player/tree/main/projects/ng-plyr
+  icon: mark-github
+  target: blank
 - text: Demo app
   link: https://ng-plyr.web.app
   icon: play
