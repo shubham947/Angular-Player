@@ -1,10 +1,12 @@
 input: .
 output: ../../dist/docs
-url: https://ng-plyr.web.app
+url: https://shubham947.github.io/Angular-Player/
 branding:
   title: ng-plyr
   logo: images/icon.png
   label: Docs
+meta:
+  title: " - ng-plyr Docs"
 links:
 - text: Intro
   link: /README.md
