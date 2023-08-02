@@ -1,7 +1,32 @@
+// Font properties
+$plyr-font-family: var(--ng-plyr-font-family, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif);
+$plyr-font-color: var(--ng-plyr-font-color, white);
+
+$plyr-video-bg: var(--ng-plyr-video-bg, black);
+
+$plyr-header-bg: var(--ng-plyr-header-bg, linear-gradient(to bottom, rgba(0, 0, 0, .75), transparent));
+$plyr-overlay-bg: var(--ng-plyr-overlay-bg, rgba(0, 0, 0, 0.6));
+$plyr-controls-bg: var(--ng-plyr-controls-bg, linear-gradient(to top, rgba(0, 0, 0, .75), transparent));
+
+// Menu box
+$plyr-menu-bg: var(--ng-plyr-menu-bg, black);
+$plyr-menu-font-color: var(--ng-plyr-menu-font-color, $plyr-font-color);
+
+// Progress bar
+$plyr-progress-bar-thumb-bg: var(--ng-plyr-progress-bar-thumb-bg, rgba(255, 255, 255, 0.85));
+$plyr-progress-bar-thumb-width: var(--ng-plyr-progress-bar-thumb-width, .8rem);
+$plyr-progress-bar-thumb-height: var(--ng-plyr-progress-bar-thumb-height, .8rem);
+$plyr-progress-bar-thumb-bg-size: var(--ng-plyr-progress-bar-thumb-bg-size, 100% 100%);
+
+// Loading spinner
+$plyr-buffering-bg: var(--ng-plyr-buffering-bg, rgba(0, 0, 0, 0.6) no-repeat center 45%);
+$plyr-buffering-img: var(--ng-plyr-buffering-img, url('../../assets/images/Spinner-multicolor.svg'));
+$plyr-buffering-bg-size: var(--ng-plyr-buffering-bg-size, 200px);
+
 .video-container {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $plyr-font-family;
     position: relative;
-    background-color: black;
+    background: $plyr-video-bg;
     display: flex;
     justify-content: center;
     margin-inline: auto;
@@ -33,7 +58,7 @@
         left: 0;
         right: 0;
         z-index: 101;
-        color: white;
+        color: $plyr-font-color;
         opacity: 0;
         transition: opacity 200ms ease-in-out;
         display: flex;
@@ -45,7 +70,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, .75), transparent);
+            background: $plyr-header-bg;
             width: 100%;
             aspect-ratio: 8/1;
             z-index: -1;
@@ -96,17 +121,13 @@
         }
 
         .loading {
-            background: rgba(0, 0, 0, 0.6) no-repeat center 45%;
-            background-image: url('../../assets/images/Spinner-multicolor.svg');
-            background-size: 200px;
-
-            // img {
-            //     width: 200px;
-            // }
+            background: $plyr-buffering-bg;
+            background-image: $plyr-buffering-img;
+            background-size: $plyr-buffering-bg-size;
         }
 
         .video-actions {
-            background-color: rgba(0, 0, 0, 0.6);
+            background: $plyr-overlay-bg;
 
             .play-btn {
                 width: 80px;
@@ -135,7 +156,7 @@
         right: 0;
         bottom: 0;
         z-index: 100;
-        color: white;
+        color: $plyr-font-color;
         opacity: 0;
         transition: opacity 200ms ease-in-out;
 
@@ -143,7 +164,7 @@
             content: "";
             position: absolute;
             bottom: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, .75), transparent);
+            background: $plyr-controls-bg;
             width: 100%;
             aspect-ratio: 6/1;
             z-index: -1;
@@ -223,10 +244,11 @@
             }
             
             .thumb {
-                width: .8rem;
-                height: .8rem;
+                width: $plyr-progress-bar-thumb-width;
+                height: $plyr-progress-bar-thumb-height;
                 border-radius: 50%;
-                background-color: rgba(255, 255, 255, 0.85);
+                background: $plyr-progress-bar-thumb-bg;
+                background-size: $plyr-progress-bar-thumb-bg-size;
                 pointer-events: none;
                 position: absolute;
                 top: 50%;
@@ -243,7 +265,7 @@
             &:focus-within .thumb {
                 width: 1rem;
                 height: 1rem;
-                background-color: white;
+                background: $plyr-progress-bar-thumb-bg;
             }
         }
 
@@ -307,7 +329,8 @@
         max-width: 12rem;
         overflow: hidden;
         opacity: .9;
-        background-color: rgba(0, 0, 0);
+        background: $plyr-menu-bg;
+        color: $plyr-menu-font-color;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -337,7 +360,7 @@
     button {
         background: none;
         border: none;
-        color: white;
+        color: $plyr-font-color;
         padding: 0;
         height: 2.5rem;
         width: 2.5rem;

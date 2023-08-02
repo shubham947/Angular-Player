@@ -18,6 +18,11 @@ Ready to impress your users with video prowess? ng-plyr has got your back! With 
 
 📺 **Chromecast Support**: Elevate the viewing experience by casting videos to Chromecast-enabled devices. And guess what? The local player becomes the remote control for the casted media! How cool is that?
 
+### Customization Galore!
+Make ng-plyr truly yours! Customize its look and feel effortlessly by updating various CSS variables to blend harmoniously with your application's design and theme.
+
+Learn more on that in [Customization](/Guides/Customization.md) guide.
+
 ## Feature checklist
 ### For end users
 - [x] Shortcuts available for different buttons

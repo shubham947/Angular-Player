@@ -1,10 +1,22 @@
+<p align="center">
+    <a href="https://ng-plyr.web.app"><img src="https://github.com/shubham947/Angular-Player/actions/workflows/firebase-hosting-merge.yml/badge.svg" alt="Firebase Deployment"></a>
+    <a href="https://shubham947.github.io/Angular-Player"><img src="https://github.com/shubham947/Angular-Player/actions/workflows/retype-action.yml/badge.svg" alt="Documentation"></a>
+    <br />
+    <a href="https://www.npmjs.com/package/ng-plyr"><img src="https://img.shields.io/npm/v/ng-plyr.svg?style=flat-square" alt="npm"></a>
+    <a href="http://packagequality.com/#?package=ng-plyr"><img src="https://npm.packagequality.com/shield/ng-plyr.svg?style=flat-square" alt="Package Quality"></a>
+    <a href="https://www.npmjs.com/package/ng-plyr"><img src="https://img.shields.io/npm/dm/ng-plyr.svg?style=flat-square" alt="npm"></a>
+    <a href="https://www.npmjs.com/package/ng-plyr"><img src="https://img.shields.io/npm/dt/ng-plyr?style=flat-square" alt="npm"></a>
+    <a href="https://github.com/shubham947/ng-plyr/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT licensed"></a>
+    <br /><br />
+</p>
+
 # Angular Player
 
 An HTML5 media player, built using Angular. It has interface similar to Youtube player.
-It can be used in Angular >= 14.
+It can be used in Angular 14 and above.
 
 ## Usage
-### Add NgPlyr to your AppModule:
+### Add NgPlyrModule to your AppModule:
 ```
 import { NgPlyrModule } from 'ng-plyr';
 ...
@@ -117,6 +129,7 @@ And assign value to mediaUrl in component.ts
 - [x] Playlist support
 - [x] Access to Player methods: play, pause, next, prev etc.
 - [x] Cast service methods are accessible
+- [x] Player theme can be customised
 - [ ] Hide controls
 - [ ] Multiple media sources
 - [ ] Hover to play media thumnails

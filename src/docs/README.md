@@ -3,6 +3,18 @@ label: Getting started
 order: 1000
 icon: rocket
 ---
+<p align="center">
+    <a href="https://ng-plyr.web.app"><img src="https://github.com/shubham947/Angular-Player/actions/workflows/firebase-hosting-merge.yml/badge.svg" alt="Firebase Deployment"></a>
+    <a href="https://shubham947.github.io/Angular-Player"><img src="https://github.com/shubham947/Angular-Player/actions/workflows/retype-action.yml/badge.svg" alt="Documentation"></a>
+    <br />
+    <a href="https://www.npmjs.com/package/ng-plyr"><img src="https://img.shields.io/npm/v/ng-plyr.svg?style=flat-square" alt="npm"></a>
+    <a href="http://packagequality.com/#?package=ng-plyr"><img src="https://npm.packagequality.com/shield/ng-plyr.svg?style=flat-square" alt="Package Quality"></a>
+    <a href="https://www.npmjs.com/package/ng-plyr"><img src="https://img.shields.io/npm/dm/ng-plyr.svg?style=flat-square" alt="npm"></a>
+    <a href="https://www.npmjs.com/package/ng-plyr"><img src="https://img.shields.io/npm/dt/ng-plyr?style=flat-square" alt="npm"></a>
+    <a href="https://github.com/shubham947/ng-plyr/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT licensed"></a>
+    <br /><br />
+</p>
+
 # Introduction
 
 Welcome to the world of ng-plyr, the ultimate video player library for Angular!

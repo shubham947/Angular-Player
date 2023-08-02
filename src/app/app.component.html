@@ -6,7 +6,7 @@
     <form [formGroup]="playFromURLForm">
         <mat-form-field appearance="fill" class="input">
             <mat-label>Enter video url to play</mat-label>
-            <input matInput placeholder="e.g. http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" formControlName="url" required>
+            <input matInput placeholder="e.g. http://example.com/BigBuckBunny.mp4" formControlName="url" required>
             <mat-error *ngIf="playFromURLForm.controls.url.invalid">Please enter a valid url</mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary" [disabled]="playFromURLForm.invalid" (click)="playURL()">Play URL</button>

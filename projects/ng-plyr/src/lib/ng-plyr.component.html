@@ -10,7 +10,7 @@
         </span>
         <div class="menu-box" [ngClass]="isMenuSettingsOpen ? '': 'hidden'">
             <!-- <input type="file" name="Select file to play" (change)="onLocalFileSelected($event)"> -->
-            <button stopClickPropagation (click)="stopVideo()">Stop Playing</button>
+            <button (click)="stopVideo()">Stop Playing</button>
         </div>
     </div>
     <div class="video-overlay" (click)="togglePlay()">

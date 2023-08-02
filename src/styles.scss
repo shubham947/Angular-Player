@@ -1,12 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body {
+    --ng-plyr-video-bg: #FF3E32 url('assets/dragon-scales.svg') fixed;
+    --ng-plyr-font-color: #a8d3a0;
     margin: 0; padding: 0;
     height: 100vh;
-    background: url('assets/dragon-scales.svg');
-    background-color: #FF3E32;
-    background-attachment: fixed;
-    background-size: contain;
+    background: #FF3E32 url('assets/dragon-scales.svg') fixed;
 }
 
 *, *::before, *::after {

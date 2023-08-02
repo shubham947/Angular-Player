@@ -3,6 +3,10 @@ label: Updates
 order: 100
 icon: project-roadmap
 ---
+### v0.6.0 (2 Aug 2023)
+#### Features
+- [x] Custom theme can be added to the player
+
 ### v0.5.2 (31 Jul 2023)
 **Fixed bugs**
 - B01: While casting, next media is not playing automatically, when current one ends
