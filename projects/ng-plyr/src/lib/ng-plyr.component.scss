@@ -361,8 +361,8 @@
     }
 }
 
-// For screens smaller than 425px wide
-@media only screen and (max-width: 425px) {
+// For screens smaller than 530px wide
+@media only screen and (max-width: 530px) {
     .video-container {
         &:hover .video-header-container,
         &:focus-within .video-header-container,

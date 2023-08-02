@@ -2,6 +2,11 @@
 
 html, body {
     margin: 0; padding: 0;
+    height: 100vh;
+    background: url('assets/dragon-scales.svg');
+    background-color: #FF3E32;
+    background-attachment: fixed;
+    background-size: contain;
 }
 
 *, *::before, *::after {

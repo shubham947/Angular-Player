@@ -5,12 +5,14 @@ icon: rocket
 ---
 # Introduction
 
-Welcome to the world of ng-plyr, the ultimate video player library for Angular! Are you ready to transform your video playback experience and impress your users with a YouTube-like interface? Buckle up, because ng-plyr is about to take your video game to the next level!
+Welcome to the world of ng-plyr, the ultimate video player library for Angular!
+
+Are you ready to transform your video playback experience and impress your users with a YouTube-like interface? Buckle up, because ng-plyr is about to take your video game to the next level!
 
 An HTML5 media player, built using Angular.
-It can be used in Angular 14 and up.
+It can be used in Angular 14 and above.
 
-It is and open-source project, so feel free to use it in your Angular projects, to build awesome media player with minimal efforts.
+It is an open-source project, so feel free to use it in your Angular projects to build awesome media player with minimal efforts.
 
 ## Installation
 Getting started with ng-plyr is a breeze! Simply run the following command to add this powerful library to your Angular project:
