@@ -3,6 +3,9 @@ label: Updates
 order: 100
 icon: project-roadmap
 ---
+### v0.6.1 (3 Aug 2023)
+Added new css variables for customizing progress bar
+
 ### v0.6.0 (2 Aug 2023)
 #### Features
 - [x] Custom theme can be added to the player

@@ -47,6 +47,10 @@ ng-plyr allows you to personalize the look and feel of your video player to seam
 Your ng-plyr video player is now a canvas for your creativity! Take it a step further and customize the progress bar thumb to achieve the perfect visual balance, or just for fun.
 
 ```css
+// Customize progress bar
+--ng-plyr-progress-bar-progress-bg: red;
+--ng-plyr-progress-bar-track-height: 3px;
+
 // Customize the background of progress bar thumb
 --ng-plyr-progress-bar-thumb-bg: rgba(255, 255, 255, 0.85)
 ```
@@ -55,6 +59,10 @@ Your ng-plyr video player is now a canvas for your creativity! Take it a step fu
 Get creative and go beyond the ordinary by adding any emoji, SVG, or image as the thumb of the progress bar. Let your imagination run wild, and infuse your player with a unique touch that sets it apart from the rest.
 
 ```css
+// Customize progress bar
+--ng-plyr-progress-bar-progress-bg: url('assets/progress.svg');
+--ng-plyr-progress-bar-track-height: 5px;
+
 // Customize the thumb of progress bar
 --ng-plyr-progress-bar-thumb-bg: #a8d3a040 url('assets/animated-car.gif');
 --ng-plyr-progress-bar-thumb-bg-size: 110% 110%;

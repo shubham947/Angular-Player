@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
   }
 
   playFromURLForm = this._fb.group({
-    url: ['', Validators.required]
+    url: ['', [Validators.required, Validators.pattern(/^(?:(http(s)?)?(sftp)?(ftp)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]]
   });
 
   track = 0;

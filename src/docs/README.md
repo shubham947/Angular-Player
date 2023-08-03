@@ -35,7 +35,7 @@ npm i ng-plyr
 ## Usage
 Now that you've installed ng-plyr, it's time to kickstart the fun! Inject the **NgPlyrModule** into your app.module.ts and prepare to embrace the world of video excellence.
 
-### Add NgPlyr to your AppModule:
+### Add NgPlyrModule to your AppModule:
 ```ts
 import { NgPlyrModule } from 'ng-plyr';
 ...

@@ -13,6 +13,8 @@ $plyr-menu-bg: var(--ng-plyr-menu-bg, black);
 $plyr-menu-font-color: var(--ng-plyr-menu-font-color, $plyr-font-color);
 
 // Progress bar
+$plyr-progress-bar-progress-bg: var(--ng-plyr-progress-bar-progress-bg, red);
+$plyr-progress-bar-track-height: var(--ng-plyr-progress-bar-track-height, 3px);
 $plyr-progress-bar-thumb-bg: var(--ng-plyr-progress-bar-thumb-bg, rgba(255, 255, 255, 0.85));
 $plyr-progress-bar-thumb-width: var(--ng-plyr-progress-bar-thumb-width, .8rem);
 $plyr-progress-bar-thumb-height: var(--ng-plyr-progress-bar-thumb-height, .8rem);
@@ -191,7 +193,7 @@ $plyr-buffering-bg-size: var(--ng-plyr-buffering-bg-size, 200px);
 
             .track {
                 width: 100%;
-                height: 3px;
+                height: $plyr-progress-bar-track-height;
                 background: rgba(150, 150, 150, .75);
                 pointer-events: none;
                 position: absolute;
@@ -211,7 +213,7 @@ $plyr-buffering-bg-size: var(--ng-plyr-buffering-bg-size, 200px);
                 }
                 
                 .track-progress {
-                    background: red;
+                    background: $plyr-progress-bar-progress-bg;
                 }
 
                 .track-buffers {

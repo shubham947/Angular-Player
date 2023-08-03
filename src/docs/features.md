@@ -52,6 +52,7 @@ Learn more on that in [Customization](/Guides/Customization.md) guide.
 - [x] Playlist support
 - [x] Access to Player methods: play, pause, next, prev etc.
 - [x] Cast service methods are accessible
+- [x] Player theme can be customised
 - [ ] Hide controls
 - [ ] Multiple media sources
 - [ ] Hover to play media thumnails
