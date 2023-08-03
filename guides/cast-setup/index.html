@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Angular-Player">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.1.0.744324836326">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.1.0.744371690925">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.1.0">
@@ -32,12 +32,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("/Angular-Player/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.1.0.744324836326" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.1.0.744371690925" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.1.0.744324836326" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.1.0.744371690925" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.1.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.1.0.744324836326" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.1.0.744324836326" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.1.0.744371690925" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.1.0.744371690925" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -255,11 +255,61 @@
 <pre class="language-markup"><code v-pre class="language-markup">&lt;script type=&quot;text/javascript&quot; src=&quot;https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1&quot;&gt;&lt;/script&gt;</code></pre>
 </doc-codeblock></div>
 <p>Now, you&#x27;re all set to unleash the power of Chromecast and bring your ng-plyr media to life on larger screens!</p>
-<doc-anchor-target id="castservice-your-gateway-to-chromecast">
+<doc-anchor-target id="code-snippet-for-casting-with-ng-plyr">
     <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#code-snippet-for-casting-with-ng-plyr">#</doc-anchor-trigger>
+        <span><span class="docs-emoji">&#x1F4BB;</span> Code snippet for Casting with ng-plyr</span>
+    </h3>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-typescript"><code v-pre class="language-typescript">import { Component, OnInit } from '@angular/core';
+import { CastService } from 'path/to/your/cast.service'; // Replace with the actual path to your CastService
+
+@Component({
+  selector: 'app-cast-page',
+  templateUrl: './cast-page.component.html',
+  styleUrls: ['./cast-page.component.scss']
+})
+export class CastPageComponent implements OnInit {
+
+  constructor(private _castService: CastService) { }
+
+  ngOnInit(): void {
+    // Check if the Cast SDK is available and initialized
+    if (this._castService.isSdkAvailable()) {
+      // Initialize Cast API
+      this._castService.initializeCastApi();
+
+      // Get the CastContext and show the Cast dialog to the user
+      let castContext = this._castService.getCastContext();
+      // Starts media casting after session starts
+      castContext.requestSession().then((session: any) =&gt; {
+        // Add event listeners
+        this.listenToPlayerEvents();
+        // Load media in the receiver
+        this._castService.loadMedia(this.media.src, 'video/mp4');
+      }).catch((err: any) =&gt; {
+        console.error(err);
+      });
+    } else {
+      console.warn('Cast SDK is not available or not initialized.');
+    }
+  }
+
+  private listenToPlayerEvents() {
+    // Add event listeners to handle player events during casting
+    // Implement your event handling logic here
+  }
+
+}</code></pre>
+</doc-codeblock></div>
+<p>Please make sure to replace &#x27;<strong>path/to/your/cast.service</strong>&#x27; with the actual path to your CastService in the import statement. Additionally, implement the <strong>listenToPlayerEvents()</strong> method according to your application&#x27;s requirements to handle player events and enable casting mode appropriately.</p>
+<p>With this setup, you&#x27;re all set to cast your media to the big screen and provide an immersive casting experience to your users!</p>
+<doc-anchor-target id="castservice-your-gateway-to-chromecast">
+    <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#castservice-your-gateway-to-chromecast">#</doc-anchor-trigger>
         <span><span class="docs-emoji">&#x1F4FA;</span> CastService - Your Gateway to Chromecast <span class="docs-emoji">&#x1F4FA;</span></span>
-    </h3>
+    </h2>
 </doc-anchor-target>
 <p>Are you ready to wield the power of ng-plyr and Chromecast like a true video wizard? Let&#x27;s explore the incredible methods that will elevate your media experience to new heights.</p>
 <p>With Chromecast enabled, you can now utilize the magic of <strong>CastService</strong> in your components. Let&#x27;s explore the methods it offers:</p>
@@ -291,6 +341,32 @@
 <li><p><strong>onCastEvent(eventName: string, cb: Function)</strong>: Be the conductor of remote player events! Create and handle custom remote player events with this method, letting you orchestrate a mesmerizing media experience. In eventName you can put <strong>RemotePlayerEventType</strong> of <strong>cast.framework.RemotePlayer</strong></p>
 </li>
 </ol>
+<doc-anchor-target id="code-snippet-for-oncastevent-method">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#code-snippet-for-oncastevent-method">#</doc-anchor-trigger>
+        <span><span class="docs-emoji">&#x1F4BB;</span> Code Snippet for <em>onCastEvent</em> method</span>
+    </h3>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-typescript"><code v-pre class="language-typescript">// Listening to remote events
+listenToPlayerEvents() {
+    // Storing local player states in local variables to restore after receiver disconnects
+
+    // Cast Connected/disconnected
+    this._castService.onCastEvent('IS_CONNECTED_CHANGED', () =&gt; {
+        if (this._castService.player.isConnected) {
+            console.log('Cast Player connected');
+            // Stop playing on local device
+        } else {
+            console.log('Cast Player disconnected');
+            this._castService.stopListeningRemotePlayerEvents();
+            // Start playing on local device
+            // Set local UI to original state
+        }
+    }).then((res: any) =&gt; console.log(res))
+    .catch((err: any) =&gt; console.error(err));
+}</code></pre>
+</doc-codeblock></div>
 <p>There you have it, an arsenal of methods to control your ng-plyr media and cast it to the grand stage of Chromecast. Embrace these methods and let your video masterpiece shine like never before!</p>
 
                                 <div class="flex items-center mt-6 mb-6 clear-both">
