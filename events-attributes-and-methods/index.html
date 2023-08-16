@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SZ0E0CHBHW"></script>
+    <script data-cfasync="false">window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-SZ0E0CHBHW');</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Angular-Player">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.1.0.744371690925">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.1.0.745473787701">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.1.0">
@@ -32,11 +35,11 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("/Angular-Player/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../favicon.ico" rel="icon">
-    <link href="../resources/css/retype.css?v=3.1.0.744371690925" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.1.0.745473787701" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.1.0.744371690925" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.1.0.745473787701" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.1.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.1.0.744371690925" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.1.0.745473787701" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -246,6 +249,7 @@
 <p>The <code v-pre>&lt;ng-plyr&gt;</code> tag offers an array of input attributes, giving you the flexibility to fine-tune your media playback experience:</p>
 <ul>
 <li><strong>src</strong>: Provide the URL of the media source to display your video or audio content.</li>
+<li><strong>preload</strong>: Define when do you want to fetch video and/or its metadata. Same as HTML video tag&#x27;s preload Attribute.</li>
 <li><strong>loadingImgSrc</strong>: Set a custom loading image to charm your users while the media loads.</li>
 <li><strong>playFrom</strong>: Start playing your media from a specific second to get the perfect playback.</li>
 <li><strong>volume</strong>: Control the volume level and set it just right for your users.</li>
@@ -255,6 +259,7 @@
 <li><strong>nextMedia</strong>: Define the media that should play next, making your playlist even more engaging.</li>
 <li><strong>playlist</strong>: Pass an entire playlist to delight your users with continuous playback.</li>
 <li><strong>loopPlaylist</strong>: Turn on the playlist loop to keep the fun going endlessly.</li>
+<li><strong>poster</strong>: Greet your users with an awesome video poster.</li>
 </ul>
 <doc-anchor-target id="output-events">
     <h3>
@@ -343,6 +348,11 @@
 <td>URL of media source</td>
 </tr>
 <tr>
+<td><code v-pre>preload</code></td>
+<td><code v-pre>string</code></td>
+<td>Same as HTML <code v-pre>&lt;video&gt;</code> preload Attribute</td>
+</tr>
+<tr>
 <td><code v-pre>loadingImgSrc</code></td>
 <td><code v-pre>string</code></td>
 <td>URL of custom loading image</td>
@@ -386,6 +396,11 @@
 <td><code v-pre>loopPlaylist</code></td>
 <td><code v-pre>boolean</code></td>
 <td>Loop over playlist</td>
+</tr>
+<tr>
+<td><code v-pre>poster</code></td>
+<td><code v-pre>string</code></td>
+<td>URL of the poster image</td>
 </tr>
 </tbody>
 </table>
