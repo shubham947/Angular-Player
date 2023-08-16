@@ -51,6 +51,7 @@ And assign value to mediaUrl in component.ts
 | Input               | Type                 | Description                                   |
 | ------------------- | -------------------- | --------------------------------------------- |
 | `src`               | `string`             | URL of media source                           |
+| `preload`           | `string`             | Same as HTML `<video>` preload Attribute      |
 | `loadingImgSrc`     | `string`             | URL of custom loading image                   |
 | `playFrom`          | `number`             | Play media starting from specified second     |
 | `volume`            | `number`             | Keep playing the same media over and over     |
@@ -60,6 +61,7 @@ And assign value to mediaUrl in component.ts
 | `nextMedia`         | `Media`              | Media to be played next                       |
 | `playlist`          | `Media[]`            | Pass entire playlist to play                  |
 | `loopPlaylist`      | `boolean`            | Loop over playlist                            |
+| `poster`            | `string`             | URL of the poster image                       |
 
 ### Output events
 | Output              | Type                 | Description                                   |

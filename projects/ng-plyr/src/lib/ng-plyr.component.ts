@@ -43,6 +43,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	// Inputs
 	@Input('src') mediaURL: string = '';
 	@Input('type') mediaType?:MediaType;
+	@Input('preload') preload:string = 'metadata';
 	@Input('playFrom') playFrom?: number;
 	@Input('loadingImgSrc') loadingImgSrc?: string;
 	@Input('captions') captions?: Array<{ path: string, lang: string }>;
@@ -53,6 +54,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	@Input('nextMedia') nextMediaToAdd?: Media;
 	@Input('playlist') mediaItems?: Media[];
 	@Input('loopPlaylist') loopPlaylist?: boolean;
+	@Input('poster') posterUrl?: string;
 
 	// Output events
 	@Output() playing = new EventEmitter<boolean>();

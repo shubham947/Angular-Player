@@ -189,7 +189,7 @@
             </span>
         </div>
     </div>
-    <video #video [src]="media.src" [loop]="isLoopingEnabled" preload="auto" (onprogress)="isMediaLoading=true"
+    <video #video [src]="media.src" [loop]="isLoopingEnabled" [poster]="media.poster" [preload]="preload" (onprogress)="isMediaLoading=true"
         (canplay)="isMediaLoading=false" (loadeddata)="updateAfterVideoInfoLoaded()" (timeupdate)="updateCurrentTime()"
         (click)="togglePlay()" (playing)="onPlay($event)" (pause)="onPause($event)" (ended)="onEnd($event)" (volumechange)="onVolumeChange($event)"
         (error)="onError($event)">

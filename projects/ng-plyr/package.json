@@ -1,6 +1,6 @@
 {
   "name": "ng-plyr",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "An HTML5 media player for developers, built using Angular, having interface similar to Youtube player.",
   "icon": "",
   "license": "MIT",

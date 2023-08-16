@@ -10,6 +10,7 @@ Hey there, fellow developer! Brace yourself as we dive into the world of ng-plyr
 The `<ng-plyr>` tag offers an array of input attributes, giving you the flexibility to fine-tune your media playback experience:
 
 - **src**: Provide the URL of the media source to display your video or audio content.
+- **preload**: Define when do you want to fetch video and/or its metadata. Same as HTML video tag's preload Attribute.
 - **loadingImgSrc**: Set a custom loading image to charm your users while the media loads.
 - **playFrom**: Start playing your media from a specific second to get the perfect playback.
 - **volume**: Control the volume level and set it just right for your users.
@@ -19,6 +20,7 @@ The `<ng-plyr>` tag offers an array of input attributes, giving you the flexibil
 - **nextMedia**: Define the media that should play next, making your playlist even more engaging.
 - **playlist**: Pass an entire playlist to delight your users with continuous playback.
 - **loopPlaylist**: Turn on the playlist loop to keep the fun going endlessly.
+- **poster**: Greet your users with an awesome video poster.
 
 ### 🎉 Output Events 🎉
 Get ready for the excitement of ng-plyr's output events, providing you with valuable information about your media playback:
@@ -68,6 +70,7 @@ You can pass the following as attributes to `<ng-plyr>` tag.
 | Input               | Type                 | Description                                   |
 | ------------------- | -------------------- | --------------------------------------------- |
 | `src`               | `string`             | URL of media source                           |
+| `preload`           | `string`             | Same as HTML `<video>` preload Attribute      |
 | `loadingImgSrc`     | `string`             | URL of custom loading image                   |
 | `playFrom`          | `number`             | Play media starting from specified second     |
 | `volume`            | `number`             | Keep playing the same media over and over     |
@@ -77,6 +80,7 @@ You can pass the following as attributes to `<ng-plyr>` tag.
 | `nextMedia`         | `Media`              | Media to be played next                       |
 | `playlist`          | `Media[]`            | Pass entire playlist to play                  |
 | `loopPlaylist`      | `boolean`            | Loop over playlist                            |
+| `poster`            | `string`             | URL of the poster image                       |
 
 #### Output events
 | Output              | Type                 | Description                                   |
