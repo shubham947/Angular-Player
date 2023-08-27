@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Angular-Player">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.2.0.746448077926">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.2.0.746469297465">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.2.0">
@@ -35,11 +35,11 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("/Angular-Player/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../favicon.ico" rel="icon">
-    <link href="../resources/css/retype.css?v=3.2.0.746448077926" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.2.0.746469297465" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.2.0.746448077926" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.2.0.746469297465" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.2.0.746448077926" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.2.0.746469297465" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -240,12 +240,17 @@
     </h3>
 </doc-anchor-target>
 <p><strong>Introducing shortcuts - the secret to unlocking rapid control over your ng-plyr video playback! With ng-plyr&#x27;s intuitive shortcuts, you can effortlessly navigate through your media like a seasoned video virtuoso.</strong></p>
-<p><span class="docs-emoji">&#x1F4FC;</span> <strong>Play and Pause</strong>: Tap the <strong>spacebar</strong> or &#x27;<strong>k</strong>&#x27; key to play and pause your media with ease. Embrace the rhythm of your content and pause at just the right moments.</p>
+<p><span class="docs-emoji">&#x23EF;&#xFE0F;</span> <strong>Play and Pause</strong>: Tap the <strong>spacebar</strong> or &#x27;<strong>k</strong>&#x27; key to play and pause your media with ease. Embrace the rhythm of your content and pause at just the right moments.</p>
 <p><span class="docs-emoji">&#x23E9;</span> <strong>Fast Forward and Rewind</strong>: Seek forward or backward by 5 seconds with the <strong>left/right arrow</strong> keys. Never miss a beat and stay in perfect sync with your video.</p>
 <p><span class="docs-emoji">&#x1F507;</span> <strong>Mute and Unmute</strong>: Silence or restore sound with a quick &#x27;<strong>m</strong>&#x27; keystroke. Mute distractions or amplify the audio brilliance as per your command.</p>
 <p><span class="docs-emoji">&#x1F509;</span><span class="docs-emoji">&#x1F50A;</span> <strong>Volume Control</strong>: Fine-tune the volume using the <strong>up/down arrow</strong> keys. Increase or decrease the volume to match your preferred audio levels.</p>
+<p><span class="docs-emoji">&#x1F300;</span> <strong>Time Warp with Speed Control</strong>: Dance through time with playback speed control:</p>
+<ul>
+<li><code v-pre>&lt;</code> : Slow down playback speed by .25x, savor each moment.</li>
+<li><code v-pre>&gt;</code> : Speed up playback speed by .25x, race through the excitement.</li>
+</ul>
 <p><span class="docs-emoji">&#x23ED;&#xFE0F;</span><span class="docs-emoji">&#x23EE;&#xFE0F;</span> <strong>Next and Previous Media</strong>: Easily switch to the next or previous media in your playlist using the &#x27;<strong>Shift + N</strong>&#x27; and &#x27;<strong>Shift + P</strong>&#x27; keys. Seamlessly transition from one video to the next.</p>
-<p><span class="docs-emoji">&#x1F4E2;</span> <strong>Toggle Fullscreen</strong>: Embrace a cinematic experience by toggling fullscreen with the &#x27;<strong>f</strong>&#x27; key. Immerse yourself and your audience in captivating visuals.</p>
+<p><span class="docs-emoji">&#x1F4FA;</span> <strong>Toggle Fullscreen</strong>: Embrace a cinematic experience by toggling fullscreen with the &#x27;<strong>f</strong>&#x27; key. Immerse yourself and your audience in captivating visuals.</p>
 <p>Ready to take control of your ng-plyr player like never before? Embrace the efficiency and convenience of shortcuts to orchestrate your media playback seamlessly.</p>
 <doc-anchor-target id="keyboard-shortcuts">
     <h3>
@@ -309,6 +314,14 @@
 <tr>
 <td>Right arrow</td>
 <td>Seek ahead 5 sec</td>
+</tr>
+<tr>
+<td><code v-pre>&lt;</code></td>
+<td>Decrease playback speed by .25x</td>
+</tr>
+<tr>
+<td><code v-pre>&gt;</code></td>
+<td>Increase playback speed by .25x</td>
 </tr>
 <tr>
 <td><code v-pre>Shift + N</code></td>
