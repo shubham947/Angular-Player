@@ -1,6 +1,5 @@
-<ng-plyr [src]="videoSrc" [volume]="vol" [autoplay]="true"
- [playlist]="mediaItems" [loopPlaylist]="true"
- (ended)="onEnd($event)"></ng-plyr>
+<ng-plyr [src]="videoSrc" [volume]="vol" [autoplay]="true" [playlist]="mediaItems" [loopPlaylist]="true" preload="metadata"
+    (ended)="onEnd($event)"></ng-plyr>
 
 <div class="form">
     <form [formGroup]="playFromURLForm">

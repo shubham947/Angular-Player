@@ -43,7 +43,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	// Inputs
 	@Input('src') mediaURL: string = '';
 	@Input('type') mediaType?:MediaType;
-	@Input('preload') preload:string = 'metadata';
+	@Input('preload') preload:string = 'none';
 	@Input('playFrom') playFrom?: number;
 	@Input('loadingImgSrc') loadingImgSrc?: string;
 	@Input('captions') captions?: Array<{ path: string, lang: string }>;
@@ -55,6 +55,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	@Input('playlist') mediaItems?: Media[];
 	@Input('loopPlaylist') loopPlaylist?: boolean;
 	@Input('poster') posterUrl?: string;
+	@Input('controls') enableControls: boolean = true;
 
 	// Output events
 	@Output() playing = new EventEmitter<boolean>();
@@ -185,11 +186,14 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	// Shortcut keys
 	@HostListener('window:keydown', ['$event'])
 	doShortcutKeyAction(event: KeyboardEvent) {
+		if (this.enableControls === false) return;
+
 		const tagName = this.document.activeElement.tagName.toLowerCase();
 		if (tagName === 'input') return;
 
 		const key = event.key.toLowerCase();
 		if ((key === ' ' && tagName != 'button') || key === 'k') {
+			event.preventDefault();
 			this.togglePlay();
 		} else if (key === 'm') {
 			this.toggleMute();
@@ -216,6 +220,10 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 			this.playNextMedia();
 		} else if (event.key === 'P') {
 			this.playPrevMedia();
+		} else if (event.key === '<') {
+			this.setPlaybackSpeed(this.video.nativeElement.playbackRate - .25);
+		} else if (event.key === '>') {
+			this.setPlaybackSpeed(this.video.nativeElement.playbackRate + .25);
 		}
 	}
 
@@ -541,14 +549,6 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 		.catch((err: any) => console.error(err));
 	}
 
-	// To Do: Implement with a backend server
-	// onLocalFileSelected(event: Event) {
-	// 	const inputElement = event.target as HTMLInputElement;
-	// 	if (inputElement?.files?.length) {
-	// 		console.log(inputElement?.files);
-	// 	}
-	// }
-
 	// Utility functions
 	formatDuration(time: any): string {
 		const sec = Math.floor(time % 60);
@@ -568,6 +568,7 @@ export class NgPlyrComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 	}
 
 	togglePlay() {
+		if (this.enableControls === false) return;
 		if (!this.isCasting) {
 			if (this.video.nativeElement.currentTime === this.video.nativeElement.duration) {
 				this.video.nativeElement.currentTime = 0;

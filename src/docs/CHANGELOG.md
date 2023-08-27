@@ -3,6 +3,15 @@ label: Updates
 order: 100
 icon: project-roadmap
 ---
+### v0.6.3 (27 Aug 2023)
+- Default for `preload` attribute is `'none'`
+- Added shortcuts for increasing (>) and decresing (<) playback speed.
+
+**Fixed bugs**
+- On pressing spacebar page was being scrolled.
+#### Features
+- [x] Media controls can be hidden, using `controls` attribute.
+
 ### v0.6.1 (3 Aug 2023)
 Added new css variables for customizing progress bar
 

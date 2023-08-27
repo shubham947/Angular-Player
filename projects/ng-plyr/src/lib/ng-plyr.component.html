@@ -1,5 +1,5 @@
 <div #videoContainer class="video-container" [ngClass]="isPlaying ? '' : 'paused'">
-    <div class="video-header-container">
+    <div class="video-header-container" *ngIf="enableControls">
         <button class="menu-icon-btn" title="Menu" (click)="isMenuSettingsOpen = !isMenuSettingsOpen">
             <svg class="menu-icon" viewBox="0 -960 960 960" *ngIf="!isPlaying">
                 <path fill="currentColor" d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
@@ -13,7 +13,7 @@
             <button (click)="stopVideo()">Stop Playing</button>
         </div>
     </div>
-    <div class="video-overlay" (click)="togglePlay()">
+    <div class="video-overlay" (click)="togglePlay()" *ngIf="enableControls">
         <div stopClickPropagation class="loading"
             [ngStyle]="{'background-image': loadingImgSrc ? 'url(' + loadingImgSrc + ')':'../assets/images/Spinner-multicolor.svg'}"
             *ngIf="isMediaLoading">
@@ -67,7 +67,7 @@
           </button>
         </div>
     </div>
-    <div class="video-controls-container">
+    <div class="video-controls-container" *ngIf="enableControls">
         <div class="timeline-container">
             <img src="" class="preview-img">
             <input #progressBar type="range" class="timeline-progress" (input)="seekTo(progressBar.value)"

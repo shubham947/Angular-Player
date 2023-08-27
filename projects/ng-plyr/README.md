@@ -132,9 +132,8 @@ And assign value to mediaUrl in component.ts
 - [x] Access to Player methods: play, pause, next, prev etc.
 - [x] Cast service methods are accessible
 - [x] Player theme can be customised
-- [ ] Hide controls
+- [x] Hide controls
 - [ ] Multiple media sources
-- [ ] Hover to play media thumnails
 - [ ] Show bookmark text on hovering a bookmark
 - [ ] Show image previews on hovering timeline
 
@@ -153,6 +152,8 @@ And assign value to mediaUrl in component.ts
 | Down arrow   | Volume down          |
 | Left arrow   | Seek back 5 sec      |
 | Right arrow  | Seek ahead 5 sec     |
+| `<`          | Decrease playback speed by .25x |
+| `>`          | Increase playback speed by .25x |
 | `Shift + N`  | Play next media      |
 | `Shift + P`  | Play prev media      |
 
